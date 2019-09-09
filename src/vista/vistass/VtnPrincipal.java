@@ -49,10 +49,12 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 0));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/empleado.png"))); // NOI18N
+        jButton1.setBackground(new java.awt.Color(153, 153, 0));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/empleado.png"))); // NOI18N
         jButton1.setToolTipText("Registrar Empleado");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
+        jButton2.setBackground(new java.awt.Color(153, 153, 0));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/cerrarSesion.png"))); // NOI18N
         jButton2.setToolTipText("Cerrar Sesión");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
