@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.vistass;
+package vista.Personas;
 
 /**
  *
@@ -48,7 +48,6 @@ public class InsertPersona extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Registro de Personas");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
