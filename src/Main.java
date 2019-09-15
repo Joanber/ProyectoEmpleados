@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelos.Conexion;
+import modelos.bd.PersonaBD;
+import modelos.bd.UsuarioBD;
 import vista.login.Login;
 
 /**
@@ -30,7 +32,7 @@ public class Main {
                     break;
                 }
             }
-            
+
             //HACEMOS QUE EL SISTEMA SE CONECTE A LA BASE DE DATOS(registramos el driver de postgres)
             Conexion.generarConexion();
 

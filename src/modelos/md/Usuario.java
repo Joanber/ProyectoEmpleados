@@ -42,4 +42,9 @@ public class Usuario {
         this.persona = persona;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "username=" + username + ", password=" + password + ", persona=" + persona + '}';
+    }
+
 }

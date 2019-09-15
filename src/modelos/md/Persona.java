@@ -12,10 +12,9 @@ package modelos.md;
 public class Persona {
 
     private String identificacion;
-    private String primerNombre;
-    private String segundoNombre;
-    private String primerApellido;
-    private String segundoApellido;
+    private String nombres;
+    private String apellidos;
+    private int edad;
     private String correo;
     private String telefono;
     private String direccion;
@@ -31,36 +30,28 @@ public class Persona {
         this.identificacion = identificacion;
     }
 
-    public String getPrimerNombre() {
-        return primerNombre;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public String getSegundoNombre() {
-        return segundoNombre;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setSegundoNombre(String segundoNombre) {
-        this.segundoNombre = segundoNombre;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public String getPrimerApellido() {
-        return primerApellido;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public String getCorreo() {

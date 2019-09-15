@@ -1,10 +1,9 @@
 CREATE TABLE "Persona"(
 
     identificacion VARCHAR(30) PRIMARY KEY,
-    primer_nombre VARCHAR(30),
-    segundo_nombre VARCHAR(30),
-    primer_apellido VARCHAR(30),
-    segundo_apellido VARCHAR(30),
+    nombres VARCHAR(30),
+    apellidos VARCHAR(30),
+    edad INTEGER,
     correo VARCHAR(30),
     telefono VARCHAR(30),
     direccion VARCHAR(30)

@@ -31,8 +31,6 @@ public class Conexion {
     private static Driver driver = null;
 
     private static Connection conn = null;
-    private static PreparedStatement stmt = null;
-    private static ResultSet rs = null;
 
     public static synchronized void generarConexion() throws SQLException {
 
@@ -66,15 +64,14 @@ public class Conexion {
         return conn;
     }
 
-    public static SQLException Statement(String Statement) {
+    public static SQLException PrepareStatement(String Statement) {
 
         try {
 
             //System.out.println(Statement);
-            conn = getConnection();
-            stmt = conn.prepareStatement(Statement);
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement(Statement);
             stmt.execute(Statement);
-            stmt.close();
 
             return null;
 
@@ -89,27 +86,17 @@ public class Conexion {
 
         try {
 
-            System.out.println(Query);
+            //System.out.println(Query);
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement(Query);
+            ResultSet rs = stmt.executeQuery();
 
-            conn = getConnection();
-            stmt = conn.prepareStatement(Query);
-            rs = stmt.executeQuery(Query);
-
-            conn.close();
             return rs;
         } catch (SQLException e) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
 
-    }
-
-    public static void closeRs() {
-        try {
-            Conexion.rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }

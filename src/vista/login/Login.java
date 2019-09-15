@@ -5,7 +5,10 @@
  */
 package vista.login;
 
+import javax.swing.JOptionPane;
+import modelos.bd.UsuarioBD;
 import vista.VtnPrincipal;
+import modelos.md.Usuario;
 
 /**
  *
@@ -15,6 +18,9 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+
+        txtUsuario.setText("PRUEBA");
+        txtPassword.setText("PRUEBA");
     }
 
     /**
@@ -193,11 +199,17 @@ public class Login extends javax.swing.JFrame {
 
     private void login() {
 
-        VtnPrincipal vtn = new VtnPrincipal();
-        vtn.setVisible(true);
-        vtn.setLocationRelativeTo(null);
+        Usuario usuario = UsuarioBD.login(txtUsuario.getText(), txtPassword.getText());
 
-        this.dispose();
+        if (usuario != null) {
+            VtnPrincipal vtn = new VtnPrincipal();
+            vtn.setVisible(true);
+            vtn.setLocationRelativeTo(null);
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE HA ENCONTRADO ESE USUARIO");
+        }
 
     }
 
