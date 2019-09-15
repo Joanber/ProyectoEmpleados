@@ -16,7 +16,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desktop = new javax.swing.JDesktopPane();
+        desk = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnPersonas = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -26,16 +26,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        desktop.setBackground(new java.awt.Color(255, 255, 255));
+        desk.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
-        desktop.setLayout(desktopLayout);
-        desktopLayout.setHorizontalGroup(
-            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout deskLayout = new javax.swing.GroupLayout(desk);
+        desk.setLayout(deskLayout);
+        deskLayout.setHorizontalGroup(
+            deskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 929, Short.MAX_VALUE)
         );
-        desktopLayout.setVerticalGroup(
-            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        deskLayout.setVerticalGroup(
+            deskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 467, Short.MAX_VALUE)
         );
 
@@ -90,12 +90,12 @@ public class VtnPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(desktop))
+                .addComponent(desk))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(desktop)
+            .addComponent(desk)
         );
 
         pack();
@@ -103,8 +103,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     private void btnPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonasActionPerformed
         // TODO add your handling code here:
-        VtnPersonas vtn = new VtnPersonas();
-        this.desktop.add(vtn);
+        VtnPersonas vtn = new VtnPersonas(this);
+        this.desk.add(vtn);
         vtn.show();
 
     }//GEN-LAST:event_btnPersonasActionPerformed
@@ -112,7 +112,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPersonas;
-    private javax.swing.JDesktopPane desktop;
+    public javax.swing.JDesktopPane desk;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

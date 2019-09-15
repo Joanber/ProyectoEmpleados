@@ -17,7 +17,27 @@ import modelos.md.Persona;
  *
  * @author MrRainx
  */
-public class PersonaBD extends Persona {
+public class PersonaBD {
+
+    public static boolean insertar(Persona persona) {
+
+        String INSERT = ""
+                + "INSERT INTO \"Persona\"\n"
+                + "( \"identificacion\", \"nombres\", \"apellidos\", \"edad\", \"correo\", \"telefono\", \"direccion\" )\n"
+                + "VALUES\n"
+                + "( \n"
+                + "     '" + persona.getIdentificacion() + "',\n"
+                + "     '" + persona.getNombres() + "',\n"
+                + "     '" + persona.getApellidos() + "',\n"
+                + "     " + persona.getEdad() + ",\n"
+                + "     '" + persona.getCorreo() + "',\n"
+                + "     '" + persona.getTelefono() + "',\n"
+                + "     '" + persona.getDireccion() + "'\n"
+                + ");";
+
+        return Conexion.PrepareStatement(INSERT) == null;
+
+    }
 
     public static ArrayList<Persona> getPersonas() {
 

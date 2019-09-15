@@ -71,7 +71,7 @@ public class Conexion {
             //System.out.println(Statement);
             Connection connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement(Statement);
-            stmt.execute(Statement);
+            stmt.executeUpdate();
 
             return null;
 
