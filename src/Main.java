@@ -7,6 +7,7 @@
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 import modelos.Conexion;
 import vista.login.Login;
 
@@ -20,8 +21,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
 
+        try {
+            //AQUI DAMOS ESTILO DE WINDOWS AL PROYECTO
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+            
             //HACEMOS QUE EL SISTEMA SE CONECTE A LA BASE DE DATOS(registramos el driver de postgres)
             Conexion.generarConexion();
 
@@ -30,7 +39,7 @@ public class Main {
             login.setVisible(true);
             login.setLocationRelativeTo(null);
 
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 

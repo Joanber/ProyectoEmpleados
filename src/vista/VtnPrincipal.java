@@ -1,6 +1,6 @@
 package vista;
 
-import vista.Personas.VtnPersonas;
+import vista.personas.VtnPersonas;
 
 /**
  *
