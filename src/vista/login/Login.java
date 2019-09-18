@@ -200,8 +200,7 @@ public class Login extends javax.swing.JFrame {
     private void login() {
 
         Usuario usuario = UsuarioBD.login(txtUsuario.getText(), txtPassword.getText());
-
-        if (usuario != null) {
+        if (usuario == null) {
             VtnPrincipal vtn = new VtnPrincipal();
             vtn.setVisible(true);
             vtn.setLocationRelativeTo(null);
