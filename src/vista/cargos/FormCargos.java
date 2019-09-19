@@ -56,6 +56,11 @@ public class FormCargos extends javax.swing.JInternalFrame {
                 txtNombreCargoActionPerformed(evt);
             }
         });
+        txtNombreCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreCargoKeyTyped(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +127,16 @@ public class FormCargos extends javax.swing.JInternalFrame {
         System.out.println("INSERTAR CARGO");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreCargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCargoKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+        if(Character.isLowerCase(c)){
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }//GEN-LAST:event_txtNombreCargoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -19,7 +19,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
     
     private TipoPermiso getPermiso(){
         TipoPermiso tipoPermiso=new TipoPermiso();
-        tipoPermiso.setNombre(txtNombreCargo.getText());
+        tipoPermiso.setNombre(txtNombrePermiso.getText());
         return tipoPermiso;
     }
 
@@ -34,7 +34,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNombreCargo = new javax.swing.JTextField();
+        txtNombrePermiso = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -46,9 +46,14 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Descripción:");
 
-        txtNombreCargo.addActionListener(new java.awt.event.ActionListener() {
+        txtNombrePermiso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreCargoActionPerformed(evt);
+                txtNombrePermisoActionPerformed(evt);
+            }
+        });
+        txtNombrePermiso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombrePermisoKeyTyped(evt);
             }
         });
 
@@ -80,7 +85,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelar)
                         .addGap(31, 31, 31)
                         .addComponent(btnGuardar))
-                    .addComponent(txtNombreCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombrePermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,7 +96,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombreCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombrePermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -102,21 +107,31 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCargoActionPerformed
+    private void txtNombrePermisoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePermisoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreCargoActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_txtNombrePermisoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if(pktipoPermiso==0){
             TipoPermisoBD.insertar(getPermiso());
-        System.out.println("INSERTAR PERMISO");
+            System.out.println("INSERTAR PERMISO");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtNombrePermisoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombrePermisoKeyTyped
+        // TODO add your handling code here:
+               char c=evt.getKeyChar();
+        if(Character.isLowerCase(c)){
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }//GEN-LAST:event_txtNombrePermisoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -124,6 +139,6 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtNombreCargo;
+    private javax.swing.JTextField txtNombrePermiso;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package vista;
 
 import vista.cargos.VtnCargos;
+import vista.horarios.VtnHorarios;
 import vista.personas.VtnPersonas;
 import vista.tipopermisos.VtnTipoPermisos;
 
@@ -166,6 +167,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     private void btnHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosActionPerformed
         // TODO add your handling code here:
+        VtnHorarios vtn=new VtnHorarios(this);
+        this.desk.add(vtn);
+        vtn.show();
     }//GEN-LAST:event_btnHorariosActionPerformed
 
     private void BtnPermisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPermisosActionPerformed
