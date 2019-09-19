@@ -6,7 +6,9 @@
 package vista.horarios;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.bd.CargoBD;
 import modelos.bd.HorarioBD;
 import modelos.md.Horario;
 import vista.VtnPrincipal;
@@ -19,6 +21,7 @@ public class VtnHorarios extends javax.swing.JInternalFrame {
 private final VtnPrincipal desktop;
 private ArrayList<Horario> horarios;
 private DefaultTableModel table;
+private  int pkHorario=0;
     public VtnHorarios(VtnPrincipal desktop) {
         this.desktop=desktop;
         this.setTitle("Horarios");
@@ -164,13 +167,37 @@ private DefaultTableModel table;
         
        
     }//GEN-LAST:event_btnNuevoActionPerformed
-
+   
+            
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        int row =tbHoraios.getSelectedRow();
+        if(row!=-1){
+            pkHorario=Integer.parseInt(tbHoraios.getValueAt(row, 0).toString());
+            FormHorarios form=new FormHorarios(pkHorario);
+            this.desktop.desk.add(form);
+            form.show();
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
+        int row =tbHoraios.getSelectedRow();
+        if(row!=-1){
+            pkHorario=Integer.parseInt(tbHoraios.getValueAt(row, 0).toString());
+            int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            CargoBD.delete(pkHorario);
+            JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
+            cargarTabla();
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
 

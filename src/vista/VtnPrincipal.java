@@ -2,6 +2,7 @@ package vista;
 
 import vista.cargos.VtnCargos;
 import vista.horarios.VtnHorarios;
+import vista.login.Login;
 import vista.personas.VtnPersonas;
 import vista.tipopermisos.VtnTipoPermisos;
 
@@ -23,7 +24,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         desk = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         btnPersonas = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
         btnCargos = new javax.swing.JButton();
         btnHorarios = new javax.swing.JButton();
         BtnPermisos = new javax.swing.JButton();
@@ -58,9 +59,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 153, 0));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/cerrarSesion.png"))); // NOI18N
-        jButton2.setToolTipText("Cerrar Sesión");
+        btnCerrarSesion.setBackground(new java.awt.Color(153, 153, 0));
+        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/cerrarSesion.png"))); // NOI18N
+        btnCerrarSesion.setToolTipText("Cerrar Sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
 
         btnCargos.setBackground(new java.awt.Color(153, 153, 0));
         btnCargos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/cargos.png"))); // NOI18N
@@ -106,7 +112,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPersonas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHorarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnPermisos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,7 +133,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnUsuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnCerrarSesion)
                 .addContainerGap())
         );
 
@@ -191,15 +197,23 @@ public class VtnPrincipal extends javax.swing.JFrame {
         vtn.show();
     }//GEN-LAST:event_btnCargosActionPerformed
 
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Login login=new Login();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnPermisos;
     private javax.swing.JButton btnCargos;
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnHorarios;
     private javax.swing.JButton btnPersonas;
     private javax.swing.JButton btnUsuarios;
     public javax.swing.JDesktopPane desk;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

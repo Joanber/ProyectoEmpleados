@@ -1,6 +1,7 @@
 package vista.tipopermisos;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.bd.TipoPermisoBD;
 import modelos.md.TipoPermiso;
@@ -15,7 +16,7 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
     
     private ArrayList<TipoPermiso> permisos;
     private DefaultTableModel table;
-
+    private int pkTipoPermiso=0;
     /**
      * Creates new form VtnCargos
      * @param desktop
@@ -164,6 +165,17 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        int row =tbPermisos.getSelectedRow();
+        if(row!=-1){
+            pkTipoPermiso=Integer.parseInt(tbPermisos.getValueAt(row, 0).toString());
+            FormTipoPermisos form=new FormTipoPermisos(pkTipoPermiso);
+            this.desktop.desk.add(form);
+            form.show();
+            this.dispose();
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
 

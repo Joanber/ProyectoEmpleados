@@ -33,7 +33,7 @@ public class UsuarioBD extends Usuario {
         return generarUsuario(SELECT);
 
     }
-
+    
     public static Usuario login(String username, String password) {
 
         String SELECT = ""

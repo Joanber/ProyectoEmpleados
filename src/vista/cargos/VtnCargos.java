@@ -5,7 +5,9 @@
  */
 package vista.cargos;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.bd.CargoBD;
 import modelos.md.Cargo;
@@ -20,7 +22,7 @@ public class VtnCargos extends javax.swing.JInternalFrame {
     
     private ArrayList<Cargo> cargos;
     private DefaultTableModel table;
-
+    private int pkCargo=0;
     /**
      * Creates new form VtnCargos
      * @param desktop
@@ -45,7 +47,11 @@ public class VtnCargos extends javax.swing.JInternalFrame {
         cargarTabla();
     }
      private void cargarTabla(){
-         cargos=CargoBD.getCargos();
+         cargos=CargoBD.getCargos(txtBuscarCargo.getText());
+         for(int j=tbCargos.getModel().getRowCount()-1;j>=0;j--){
+             table.removeRow(j);
+         }
+         
          for(Cargo cargo: cargos){
              table.addRow(new Object[]{
                  cargo.getId()
@@ -108,11 +114,22 @@ public class VtnCargos extends javax.swing.JInternalFrame {
         });
 
         BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
+            }
+        });
+
+        txtBuscarCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarCargoKeyReleased(evt);
             }
         });
 
@@ -161,7 +178,7 @@ public class VtnCargos extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        FormCargos form =new FormCargos(0);
+        FormCargos form =new FormCargos(0,desktop);
         this.desktop.desk.add(form);
         form.show();
         this.dispose();
@@ -169,7 +186,40 @@ public class VtnCargos extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        int row =tbCargos.getSelectedRow();
+        if(row!=-1){
+           pkCargo=Integer.parseInt(tbCargos.getValueAt(row, 0).toString());
+           FormCargos form=new FormCargos(pkCargo,desktop);
+            this.desktop.desk.add(form);
+            form.show();
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        int row =tbCargos.getSelectedRow();
+        if(row!=-1){
+            pkCargo=Integer.parseInt(tbCargos.getValueAt(row, 0).toString());
+            int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            CargoBD.delete(pkCargo);
+            JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
+            cargarTabla();
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    private void txtBuscarCargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCargoKeyReleased
+        // TODO add your handling code here:
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+             cargarTabla();
+         }
+    }//GEN-LAST:event_txtBuscarCargoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -23,6 +23,12 @@ public class FormHorarios extends javax.swing.JInternalFrame {
     
     public FormHorarios(int pkHorario) {
         this.pkHorario=pkHorario;
+        if (pkHorario==0) {
+            this.setTitle("Registro de horarios");
+        }else{
+            this.setTitle("Modificacion de horarios");
+            
+        }
         initComponents();
         initSpinners();
     }
@@ -170,8 +176,12 @@ public class FormHorarios extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if(pkHorario==0){
         HorarioBD.insertar(getHorario());
         System.out.println("INSERTAR HORARIO");
+        }else{
+            System.out.println(pkHorario+"---------------->>>>>>>>>>IDDDDDDDD");
+        }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

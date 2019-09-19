@@ -24,10 +24,24 @@ public class CargoBD extends Cargo {
 "	VALUES ( '"+cargo.getNombre()+"');";
         return Conexion.PrepareStatement(INSERT)==null;
     }
+    public static boolean update(Cargo cargo){
+        String UPDATE="UPDATE public.\"Cargo\"\n" +
+"	set nombre='"+cargo.getNombre()+"'\n" +
+"	WHERE id="+cargo.getId()+";";
+        System.out.println("update--------------->>>>>>>>>>>"+UPDATE);
+        return Conexion.PrepareStatement(UPDATE)==null;
+    }
+    public static boolean delete(int id){
+        String DELETE="DELETE FROM public.\"Cargo\"\n" +
+"	WHERE id="+id+";";
+        System.out.println(DELETE);
+        return Conexion.PrepareStatement(DELETE)==null;
+        
+    }
     
-    public static ArrayList<Cargo> getCargos(){
+    public static ArrayList<Cargo> getCargos(String nombre){
             String SELECT="SELECT id, nombre\n" +
-                    "	FROM public.\"Cargo\"; ";
+                    "	FROM public.\"Cargo\" WHERE nombre ILIKE '%"+nombre+"%'; ";
             ArrayList<Cargo> lista=new ArrayList<>();
             ResultSet rs=Conexion.Query(SELECT);
             
