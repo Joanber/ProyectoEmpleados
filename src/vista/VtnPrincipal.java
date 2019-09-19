@@ -5,6 +5,7 @@ import vista.horarios.VtnHorarios;
 import vista.login.Login;
 import vista.personas.VtnPersonas;
 import vista.tipopermisos.VtnTipoPermisos;
+import vista.usuarios.VtnUsuarios;
 
 
 /**
@@ -188,6 +189,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
+        VtnUsuarios vtn=new VtnUsuarios(this);
+        this.desk.add(vtn);
+        vtn.show();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargosActionPerformed

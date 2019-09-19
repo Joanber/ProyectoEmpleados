@@ -7,6 +7,7 @@ package modelos.bd;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelos.Conexion;
@@ -33,7 +34,7 @@ public class UsuarioBD extends Usuario {
         return generarUsuario(SELECT);
 
     }
-    
+
     public static Usuario login(String username, String password) {
 
         String SELECT = ""
@@ -49,6 +50,47 @@ public class UsuarioBD extends Usuario {
 
         return generarUsuario(SELECT);
 
+    }
+
+    public static boolean insertar(Usuario usuario) {
+        String INSERT = "INSERT INTO public.\"Usuario\"(\n"
+                + "	username, password, persona_id)\n"
+                + "	VALUES ('" + usuario.getUsername() + "','" + usuario.getPassword() + "' ,'" + usuario.getPersona().getIdentificacion() + "' );";
+        System.out.println(INSERT);
+        return Conexion.PrepareStatement(INSERT) == null;
+    }
+
+    public static boolean update(Usuario usuario, String username) {
+        String UPDATE = "UPDATE public.\"Usuario\"\n"
+                + "	SET username='" + usuario.getUsername() + "', password='" + usuario.getPassword() + "', persona_id='" + usuario.getPersona().getIdentificacion() + "'\n"
+                + "	WHERE username='" + username + "';";
+        System.out.println(UPDATE);
+        return Conexion.PrepareStatement(UPDATE) == null;
+    }
+
+    public static boolean delete(String username) {
+        String DELETE = "DELETE FROM public.\"Usuario\"\n"
+                + "	WHERE username='" + username + "'";
+        System.out.println(DELETE);
+        return Conexion.PrepareStatement(DELETE) == null;
+    }
+
+    public static ArrayList<Usuario> getUsuarios(String username) {
+        String SELECT = "SELECT username, password, persona_id\n"
+                + "	FROM public.\"Usuario\" WHERE username ILIKE '%" + username + "%'";
+        System.out.println(SELECT+"--------------------->>>>>>>>>>SELECT");
+        ArrayList<Usuario> lista = new ArrayList<>();
+        ResultSet rs = Conexion.Query(SELECT);
+
+        try {
+            while (rs.next()) {
+                Usuario usuario = generarUsuario(SELECT);
+                lista.add(usuario);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     private static Usuario generarUsuario(String SELECT) {

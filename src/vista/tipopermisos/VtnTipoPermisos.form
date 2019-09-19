@@ -134,6 +134,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscarCargo">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarCargoKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

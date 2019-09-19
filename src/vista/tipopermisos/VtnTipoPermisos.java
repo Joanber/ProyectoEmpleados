@@ -1,5 +1,6 @@
 package vista.tipopermisos;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +42,10 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
         cargarTabla();
     }
      private void cargarTabla(){
-         permisos=TipoPermisoBD.getTipoPermisos();
+         permisos=TipoPermisoBD.getTipoPermisos(txtBuscarCargo.getText());
+         for(int j=tbPermisos.getModel().getRowCount()-1;j>=0;j--){
+             table.removeRow(j);
+         }
          for(TipoPermiso tipoPermiso: permisos){
              table.addRow(new Object[]{
                  tipoPermiso.getId(),
@@ -112,6 +116,12 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
             }
         });
 
+        txtBuscarCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarCargoKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +167,7 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        FormTipoPermisos form =new FormTipoPermisos(0);
+        FormTipoPermisos form =new FormTipoPermisos(0,desktop);
         this.desktop.desk.add(form);
         form.show();
         this.dispose();
@@ -168,7 +178,7 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
         int row =tbPermisos.getSelectedRow();
         if(row!=-1){
             pkTipoPermiso=Integer.parseInt(tbPermisos.getValueAt(row, 0).toString());
-            FormTipoPermisos form=new FormTipoPermisos(pkTipoPermiso);
+            FormTipoPermisos form=new FormTipoPermisos(pkTipoPermiso,desktop);
             this.desktop.desk.add(form);
             form.show();
             this.dispose();
@@ -177,6 +187,13 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void txtBuscarCargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCargoKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+             cargarTabla();
+         }
+    }//GEN-LAST:event_txtBuscarCargoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

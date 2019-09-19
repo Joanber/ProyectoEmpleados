@@ -15,37 +15,37 @@ import vista.VtnPrincipal;
  * @author Skull
  */
 public class FormCargos extends javax.swing.JInternalFrame {
-    private final VtnPrincipal desktop;
-    private int pkCargo=0;
-    private Cargo cargoID;
-    
 
-    
-    public FormCargos(int pkCargo,VtnPrincipal desktop) {
-        this.pkCargo=pkCargo;
-        this.desktop=desktop;
-        
+    private final VtnPrincipal desktop;
+    private int pkCargo = 0;
+    private Cargo cargoID;
+
+    public FormCargos(int pkCargo, VtnPrincipal desktop) {
+        this.pkCargo = pkCargo;
+        this.desktop = desktop;
+
         initComponents();
         cargarCargoBD(pkCargo);
     }
-    
-    
-    private Cargo getCargo(){
-        Cargo cargo=new Cargo();
-        if (pkCargo==0) {
-        cargo.setNombre(txtNombreCargo.getText());
-        }else{
+
+    private Cargo getCargo() {
+        Cargo cargo = new Cargo();
+        if (pkCargo == 0) {
+            cargo.setNombre(txtNombreCargo.getText());
+        } else {
             cargo.setId(pkCargo);
             cargo.setNombre(txtNombreCargo.getText());
         }
         return cargo;
     }
-    private void cargarCargoBD(int pkCargo){
-        if (pkCargo!=0) {
-            cargoID=CargoBD.getCargopor(pkCargo);
+
+    private void cargarCargoBD(int pkCargo) {
+        if (pkCargo != 0) {
+            cargoID = CargoBD.getCargopor(pkCargo);
             txtNombreCargo.setText(cargoID.getNombre());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,39 +137,39 @@ public class FormCargos extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        VtnCargos vtn=new VtnCargos(desktop);
+        VtnCargos vtn = new VtnCargos(desktop);
         this.desktop.desk.add(vtn);
         vtn.show();
-                  
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(txtNombreCargo.getText().equals("")){
-             JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
-        }else{
-        if(pkCargo==0){
-        CargoBD.insertar(getCargo());
-        JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
-        System.out.println("INSERTAR CARGO");
-        }else{
-            CargoBD.update(getCargo());
-            JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
-            System.out.println("MODIFICAR CARGO");
-        }
-        this.dispose();
-        VtnCargos vtn=new VtnCargos(desktop);
-        this.desktop.desk.add(vtn);
-        vtn.show();
+        if (txtNombreCargo.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (pkCargo == 0) {
+                CargoBD.insertar(getCargo());
+                JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+                System.out.println("INSERTAR CARGO");
+            } else {
+                CargoBD.update(getCargo());
+                JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
+                System.out.println("MODIFICAR CARGO");
+            }
+            this.dispose();
+            VtnCargos vtn = new VtnCargos(desktop);
+            this.desktop.desk.add(vtn);
+            vtn.show();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNombreCargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCargoKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtNombreCargoKeyTyped

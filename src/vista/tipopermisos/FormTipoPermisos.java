@@ -1,26 +1,45 @@
 package vista.tipopermisos;
 
+import javax.swing.JOptionPane;
 import modelos.bd.TipoPermisoBD;
 import modelos.md.TipoPermiso;
+import vista.VtnPrincipal;
+import vista.cargos.VtnCargos;
 
 /**
  *
  * @author Skull
  */
 public class FormTipoPermisos extends javax.swing.JInternalFrame {
-    private int pktipoPermiso=0;
 
-    
-    public FormTipoPermisos(int pktipoPermiso) {
-        this.pktipoPermiso=pktipoPermiso;
+    private final VtnPrincipal desktop;
+    private int pktipoPermiso = 0;
+    private TipoPermiso permiso;
+
+    public FormTipoPermisos(int pktipoPermiso, VtnPrincipal desktop) {
+        this.desktop = desktop;
+        this.pktipoPermiso = pktipoPermiso;
         initComponents();
+        cargarTipoPermiso(pktipoPermiso);
     }
-    
-    
-    private TipoPermiso getPermiso(){
-        TipoPermiso tipoPermiso=new TipoPermiso();
-        tipoPermiso.setNombre(txtNombrePermiso.getText());
+
+    private TipoPermiso getPermiso() {
+        TipoPermiso tipoPermiso = new TipoPermiso();
+        if (pktipoPermiso == 0) {
+            tipoPermiso.setNombre(txtNombrePermiso.getText());
+        } else {
+            tipoPermiso.setId(pktipoPermiso);
+            tipoPermiso.setNombre(txtNombrePermiso.getText());
+
+        }
         return tipoPermiso;
+    }
+
+    private void cargarTipoPermiso(int pkTipoPermiso) {
+        if (pkTipoPermiso != 0) {
+            permiso = TipoPermisoBD.getTipoPermisopor(pkTipoPermiso);
+            txtNombrePermiso.setText(permiso.getNombre());
+        }
     }
 
     /**
@@ -113,22 +132,40 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(pktipoPermiso==0){
-            TipoPermisoBD.insertar(getPermiso());
-            System.out.println("INSERTAR PERMISO");
+        if (txtNombrePermiso.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (pktipoPermiso == 0) {
+                TipoPermisoBD.insertar(getPermiso());
+                JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+                System.out.println("INSERTAR PERMISO");
+            } else {
+                TipoPermisoBD.update(getPermiso());
+                JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
+                System.out.println("MODIFICAR PERMISO");
+            }
+            this.dispose();
+            VtnTipoPermisos vtn = new VtnTipoPermisos(desktop);
+            this.desktop.desk.add(vtn);
+            vtn.show();
         }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        VtnTipoPermisos vtn = new VtnTipoPermisos(desktop);
+        this.desktop.desk.add(vtn);
+        vtn.show();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombrePermisoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombrePermisoKeyTyped
         // TODO add your handling code here:
-               char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtNombrePermisoKeyTyped

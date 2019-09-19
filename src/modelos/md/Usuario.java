@@ -16,6 +16,7 @@ public class Usuario {
     private Persona persona;
 
     public Usuario() {
+        this.persona=new Persona();
     }
 
     public String getUsername() {

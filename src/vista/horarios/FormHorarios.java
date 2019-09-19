@@ -8,35 +8,40 @@ package vista.horarios;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.text.DateFormatter;
 import modelos.bd.HorarioBD;
 import modelos.md.Horario;
+import vista.VtnPrincipal;
 
 /**
  *
  * @author Skull
  */
 public class FormHorarios extends javax.swing.JInternalFrame {
-    private int pkHorario=0;
-    
-    public FormHorarios(int pkHorario) {
-        this.pkHorario=pkHorario;
-        if (pkHorario==0) {
+
+    private final VtnPrincipal desktop;
+    private int pkHorario = 0;
+
+    public FormHorarios(int pkHorario, VtnPrincipal desktop) {
+        this.desktop = desktop;
+        this.pkHorario = pkHorario;
+        if (pkHorario == 0) {
             this.setTitle("Registro de horarios");
-        }else{
+        } else {
             this.setTitle("Modificacion de horarios");
-            
+
         }
         initComponents();
         initSpinners();
     }
-    
-    private Horario getHorario(){
-        Horario horario=new Horario();
-        String timeInicio=new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
-        String timeFin=new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
+
+    private Horario getHorario() {
+        Horario horario = new Horario();
+        String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
+        String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
         LocalTime inicio = LocalTime.parse(timeInicio);
         LocalTime fin = LocalTime.parse(timeFin);
         horario.setInicio(inicio);
@@ -44,8 +49,8 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         horario.setJornada(cmbJornadas.getSelectedItem().toString());
         return horario;
     }
-    
-    private void initSpinners(){
+
+    private void initSpinners() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
         calendar.set(Calendar.MINUTE, 0);
@@ -53,23 +58,24 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         SpinnerDateModel model2 = new SpinnerDateModel();
         model.setValue(calendar.getTime());
         model2.setValue(calendar.getTime());
-        
+
         this.spnInicio.setModel(model);
         this.spnFin.setModel(model2);
-        
+
         JSpinner.DateEditor editor = new JSpinner.DateEditor(this.spnInicio, "HH:mm");
         JSpinner.DateEditor editor2 = new JSpinner.DateEditor(this.spnFin, "HH:mm");
-        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-        DateFormatter formatter2 = (DateFormatter)editor2.getTextField().getFormatter();
-        
+        DateFormatter formatter = (DateFormatter) editor.getTextField().getFormatter();
+        DateFormatter formatter2 = (DateFormatter) editor2.getTextField().getFormatter();
+
         formatter.setOverwriteMode(true);
         formatter.setAllowsInvalid(false); // this makes what you want
         formatter2.setOverwriteMode(true);
         formatter2.setAllowsInvalid(false); // this makes what you want
         this.spnInicio.setEditor(editor);
         this.spnFin.setEditor(editor2);
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -172,16 +178,28 @@ public class FormHorarios extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        VtnHorarios vtn = new VtnHorarios(desktop);
+        this.desktop.desk.add(vtn);
+        vtn.show();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(pkHorario==0){
-        HorarioBD.insertar(getHorario());
-        System.out.println("INSERTAR HORARIO");
-        }else{
-            System.out.println(pkHorario+"---------------->>>>>>>>>>IDDDDDDDD");
+
+        if (pkHorario == 0) {
+            HorarioBD.insertar(getHorario());
+            JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+            System.out.println("INSERTAR HORARIO");
+        } else {
+            HorarioBD.update(getHorario());
+            JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
+            System.out.println(pkHorario + "---------------->>>>>>>>>>IDDDDDDDD");
         }
+        this.dispose();
+        VtnHorarios vtn = new VtnHorarios(desktop);
+        this.desktop.desk.add(vtn);
+        vtn.show();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

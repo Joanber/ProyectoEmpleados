@@ -17,22 +17,24 @@ import modelos.md.Horario;
  *
  * @author Skull
  */
-public class HorarioBD extends Horario{
-    public static boolean insertar(Horario horario){
-        String INSERT="INSERT INTO public.\"Horario\"(\n" +
-"	 hora_inicio, hora_fin, jornada)\n" +
-"	VALUES ( '"+horario.getInicio()+ "', '"+horario.getFin()+"', '"+horario.getJornada()+"');";
-        return Conexion.PrepareStatement(INSERT)==null;
+public class HorarioBD extends Horario {
+
+    public static boolean insertar(Horario horario) {
+        String INSERT = "INSERT INTO public.\"Horario\"(\n"
+                + "	 hora_inicio, hora_fin, jornada)\n"
+                + "	VALUES ( '" + horario.getInicio() + "', '" + horario.getFin() + "', '" + horario.getJornada() + "');";
+        return Conexion.PrepareStatement(INSERT) == null;
     }
-    public static ArrayList<Horario> getHorarios(){
-            String SELECT ="SELECT id, hora_inicio, hora_fin, jornada\n" +
-                    "	FROM public.\"Horario\";";
-            ArrayList<Horario> lista=new ArrayList<>();
-            ResultSet rs=Conexion.Query(SELECT);
-            
+
+    public static ArrayList<Horario> getHorarios(String jornada) {
+        String SELECT = "SELECT id, hora_inicio, hora_fin, jornada\n"
+                + "	FROM public.\"Horario\"  WHERE jornada ILIKE '%" + jornada + "%';";
+        ArrayList<Horario> lista = new ArrayList<>();
+        ResultSet rs = Conexion.Query(SELECT);
+
         try {
-            while(rs.next()){
-                Horario horario=generarHorario(rs);
+            while (rs.next()) {
+                Horario horario = generarHorario(rs);
                 lista.add(horario);
             }
         } catch (SQLException ex) {
@@ -40,26 +42,41 @@ public class HorarioBD extends Horario{
         }
         return lista;
     }
-    public static  Horario getHorariopor(int id){
-            String SELECT ="SELECT id, hora_inicio, hora_fin, jornada\n" +
-                    "	FROM public.\"Horario\" WHERE id="+id+";";
-            Horario horario=null;
-            ResultSet rs=Conexion.Query(SELECT);
-            
+
+    public static boolean update(Horario horario) {
+        String UPDATE = "UPDATE public.\"Horario\"\n"
+                + "	SET  hora_inicio='" + horario.getInicio() + "', hora_fin='" + horario.getFin() + "', jornada='" + horario.getJornada() + "'\n"
+                + "	WHERE id=" + horario.getId() + ";";
+        System.out.println(UPDATE);
+        return Conexion.PrepareStatement(UPDATE) == null;
+    }
+
+    public static boolean delete(int id) {
+        String DELETE = "DELETE FROM public.\"Horario\"\n"
+                + "	WHERE id=" + id + "";
+        return Conexion.PrepareStatement(DELETE) == null;
+    }
+
+    public static Horario getHorariopor(int id) {
+        String SELECT = "SELECT id, hora_inicio, hora_fin, jornada\n"
+                + "	FROM public.\"Horario\" WHERE id=" + id + ";";
+        Horario horario = null;
+        ResultSet rs = Conexion.Query(SELECT);
+
         try {
-            while(rs.next()){
-                horario=generarHorario(rs);
+            while (rs.next()) {
+                horario = generarHorario(rs);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HorarioBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return horario;
     }
-    
-    public static Horario generarHorario(ResultSet rs){
-        
+
+    public static Horario generarHorario(ResultSet rs) {
+
         try {
-            Horario horario=new Horario();
+            Horario horario = new Horario();
             horario.setId(rs.getInt(1));
             horario.setInicio(rs.getTime(2).toLocalTime());
             horario.setFin(rs.getTime(3).toLocalTime());
@@ -70,5 +87,5 @@ public class HorarioBD extends Horario{
         }
         return null;
     }
-    
+
 }
