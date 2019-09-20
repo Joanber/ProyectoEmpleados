@@ -5,9 +5,13 @@
  */
 package vista.horarios;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -21,35 +25,59 @@ import vista.VtnPrincipal;
  * @author Skull
  */
 public class FormHorarios extends javax.swing.JInternalFrame {
-
+    
     private final VtnPrincipal desktop;
     private int pkHorario = 0;
-
+    private Horario horarioID;
+    
     public FormHorarios(int pkHorario, VtnPrincipal desktop) {
         this.desktop = desktop;
         this.pkHorario = pkHorario;
-        if (pkHorario == 0) {
-            this.setTitle("Registro de horarios");
-        } else {
-            this.setTitle("Modificacion de horarios");
-
-        }
+        
         initComponents();
         initSpinners();
+        cargarHorarioBD(pkHorario);
     }
-
+    
     private Horario getHorario() {
         Horario horario = new Horario();
-        String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
-        String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
-        LocalTime inicio = LocalTime.parse(timeInicio);
-        LocalTime fin = LocalTime.parse(timeFin);
-        horario.setInicio(inicio);
-        horario.setFin(fin);
-        horario.setJornada(cmbJornadas.getSelectedItem().toString());
+        if (pkHorario == 0) {
+            String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
+            String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
+            LocalTime inicio = LocalTime.parse(timeInicio);
+            LocalTime fin = LocalTime.parse(timeFin);
+            horario.setInicio(inicio);
+            horario.setFin(fin);
+            horario.setJornada(cmbJornadas.getSelectedItem().toString());
+        } else {
+            horario.setId(pkHorario);
+            String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
+            String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
+            LocalTime inicio = LocalTime.parse(timeInicio);
+            LocalTime fin = LocalTime.parse(timeFin);
+            horario.setInicio(inicio);
+            horario.setFin(fin);
+            horario.setJornada(cmbJornadas.getSelectedItem().toString());
+        }
         return horario;
     }
-
+    private void cargarHorarioBD(int pkHorario){
+        if(pkHorario!=0){
+            try {
+                horarioID=HorarioBD.getHorariopor(pkHorario);
+                cmbJornadas.setSelectedItem(horarioID.getJornada());
+                String fechaInicio=horarioID.getInicio().toString();
+                String fechaFin=horarioID.getFin().toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                Date fechaInicioS = sdf.parse(fechaInicio);
+                Date fechaFinS=sdf.parse(fechaFin);
+                spnInicio.setValue(fechaInicioS);
+                spnFin.setValue(fechaFinS);
+            } catch (ParseException ex) {
+                Logger.getLogger(FormHorarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     private void initSpinners() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 24); // 24 == 12 PM == 00:00:00
@@ -58,22 +86,22 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         SpinnerDateModel model2 = new SpinnerDateModel();
         model.setValue(calendar.getTime());
         model2.setValue(calendar.getTime());
-
+        
         this.spnInicio.setModel(model);
         this.spnFin.setModel(model2);
-
+        
         JSpinner.DateEditor editor = new JSpinner.DateEditor(this.spnInicio, "HH:mm");
         JSpinner.DateEditor editor2 = new JSpinner.DateEditor(this.spnFin, "HH:mm");
         DateFormatter formatter = (DateFormatter) editor.getTextField().getFormatter();
         DateFormatter formatter2 = (DateFormatter) editor2.getTextField().getFormatter();
-
+        
         formatter.setOverwriteMode(true);
         formatter.setAllowsInvalid(false); // this makes what you want
         formatter2.setOverwriteMode(true);
         formatter2.setAllowsInvalid(false); // this makes what you want
         this.spnInicio.setEditor(editor);
         this.spnFin.setEditor(editor2);
-
+        
     }
 
     /**
