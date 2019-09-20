@@ -19,8 +19,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
 
-        txtUsuario.setText("admin");
-        txtPassword.setText("admin");
+        txtUsuario.setText("ADMIN");
+        txtPassword.setText("ADMIN");
     }
 
     /**

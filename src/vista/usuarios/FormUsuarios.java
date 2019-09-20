@@ -28,6 +28,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
         this.pkUsuario = pkUsuario;
         this.desktop = desktop;
         initComponents();
+        this.setTitle("Registro de usuarios");
         cargarUsuarioBD(pkUsuario);
         cargarComboPersonas();
     }
@@ -40,7 +41,6 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
             String identificacion=cmbPersonas.getSelectedItem().toString();
             String[] cortarSoloIdentificacionComboBox=identificacion.split("-");
             String identificacionCortada=cortarSoloIdentificacionComboBox[0];
-            System.out.println("IDENTIFICACION CORTADA--->>>"+identificacionCortada);
             usuario.getPersona().setIdentificacion(identificacionCortada);
         } else {
             
@@ -56,7 +56,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
     }
     private void cargarComboPersonas(){
         cmbPersonas.removeAllItems();
-        personas=PersonaBD.getPersonas();
+        personas=PersonaBD.getPersonas("");
         if(personas==null){
             System.out.println("NO HAY PERSONAS");
         }else{
@@ -188,7 +188,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

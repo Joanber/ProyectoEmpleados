@@ -5,8 +5,10 @@
  */
 package vista.personas;
 
+import javax.swing.JOptionPane;
 import modelos.bd.PersonaBD;
 import modelos.md.Persona;
+import vista.VtnPrincipal;
 
 /**
  *
@@ -14,26 +16,56 @@ import modelos.md.Persona;
  */
 public class FormPersona extends javax.swing.JInternalFrame {
 
+    private final VtnPrincipal desktop;
+    private Persona persona;
+
     private String pkPersona = null;
 
-    public FormPersona(String pkPersona) {
+    public FormPersona(String pkPersona, VtnPrincipal desktop) {
         this.pkPersona = pkPersona;
+        this.desktop = desktop;
+        this.setTitle("Personas");
         initComponents();
+        cargarPersonaBD(pkPersona);
     }
 
     private Persona getPersona() {
 
         Persona persona = new Persona();
+        if (pkPersona == null) {
+            persona.setIdentificacion(txtIdentificacion.getText());
+            persona.setNombres(txtNombres.getText());
+            persona.setApellidos(txtApellidos.getText());
+            persona.setEdad(Integer.valueOf(txtEdad.getText()));
+            persona.setCorreo(txtEmail.getText());
+            persona.setTelefono(txtTelefono.getText());
+            persona.setDireccion(txtDireccion.getText());
 
-        persona.setIdentificacion(txtIdentificacion.getText());
-        persona.setNombres(txtNombres.getText());
-        persona.setApellidos(txtApellidos.getText());
-        persona.setEdad(Integer.valueOf(txtEdad.getText()));
-        persona.setCorreo(txtEmail.getText());
-        persona.setTelefono(txtTelefono.getText());
-        persona.setDireccion(txtDireccion.getText());
+        } else {
+
+            persona.setIdentificacion(txtIdentificacion.getText());
+            persona.setNombres(txtNombres.getText());
+            persona.setApellidos(txtApellidos.getText());
+            persona.setEdad(Integer.valueOf(txtEdad.getText()));
+            persona.setCorreo(txtEmail.getText());
+            persona.setTelefono(txtTelefono.getText());
+            persona.setDireccion(txtDireccion.getText());
+        }
 
         return persona;
+    }
+
+    private void cargarPersonaBD(String pkPersona) {
+        if (pkPersona != null) {
+            persona = PersonaBD.getPersonaPor(pkPersona);
+            txtIdentificacion.setText(persona.getIdentificacion());
+            txtNombres.setText(persona.getNombres());
+            txtApellidos.setText(persona.getApellidos());
+            txtEdad.setText(String.valueOf(persona.getEdad()));
+            txtEmail.setText(persona.getCorreo());
+            txtTelefono.setText(persona.getTelefono());
+            txtDireccion.setText(persona.getDireccion());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +93,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel1.setText("Registro de Personas");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -114,22 +147,22 @@ public class FormPersona extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(46, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 24, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
@@ -143,31 +176,29 @@ public class FormPersona extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8))
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,10 +206,23 @@ public class FormPersona extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (pkPersona == null) {
-
-            PersonaBD.insertar(getPersona());
-            System.out.println("INSERTAR");
+        if (txtIdentificacion.getText().equals("") || txtNombres.getText().equals("") || txtApellidos.getText().equals("")
+                || txtEdad.getText().equals("") || txtEmail.getText().equals("") || txtTelefono.getText().equals("") || txtDireccion.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (pkPersona == null) {
+                PersonaBD.insertar(getPersona());
+                JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+                System.out.println("INSERTAR");
+            } else {
+                PersonaBD.update(getPersona(), pkPersona);
+                JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
+                System.out.println("MODIFICAR");
+            }
+            this.dispose();
+            VtnPersonas vtn=new VtnPersonas(desktop);
+            this.desktop.desk.add(vtn);
+            vtn.show();
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed

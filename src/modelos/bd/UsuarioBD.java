@@ -107,7 +107,6 @@ public class UsuarioBD extends Usuario {
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return usuario;
     }
 

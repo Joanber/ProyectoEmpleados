@@ -111,6 +111,11 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
         });
 
         BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -208,6 +213,24 @@ public class VtnTipoPermisos extends javax.swing.JInternalFrame {
              cargarTabla();
          }
     }//GEN-LAST:event_txtBuscarCargoKeyReleased
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+          int row =tbPermisos.getSelectedRow();
+        if(row!=-1){
+            pkTipoPermiso=Integer.parseInt(tbPermisos.getValueAt(row, 0).toString());
+            int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                TipoPermisoBD.delete(pkTipoPermiso);
+                JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
+                cargarTabla();
+            }
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

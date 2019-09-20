@@ -6,6 +6,7 @@
 package vista.personas;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.bd.PersonaBD;
 import modelos.md.Persona;
@@ -21,7 +22,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
     private ArrayList<Persona> personas;
     private final VtnPrincipal desktop;
 
-    private String pkPersona;
+    private String pkPersona=null;
 
     public VtnPersonas(VtnPrincipal desktop) {
         this.desktop = desktop;
@@ -37,7 +38,10 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
     }
 
     private void cargarTabla() {
-        personas = PersonaBD.getPersonas();
+        personas = PersonaBD.getPersonas(txtBuscar.getText());
+        for (int j = tbl.getModel().getRowCount() - 1; j >= 0; j--) {
+            table.removeRow(j);
+        }
         for (Persona persona : personas) {
             table.addRow(new Object[]{
                 persona.getIdentificacion(),
@@ -93,6 +97,11 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         jLabel1.setText("Listado de Personas");
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -102,9 +111,20 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Buscar:");
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,13 +174,51 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-
-        FormPersona form = new FormPersona(null);
+        this.dispose();
+        FormPersona form = new FormPersona(null, desktop);
         this.desktop.desk.add(form);
         form.show();
 
 
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        cargarTabla();
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        int row = tbl.getSelectedRow();
+        if (row != -1) {
+            pkPersona = String.valueOf(tbl.getValueAt(row, 0).toString());
+            FormPersona form = new FormPersona(pkPersona, desktop);
+            this.desktop.desk.add(form);
+            form.show();
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+         int row = tbl.getSelectedRow();
+        if (row != -1) {
+            pkPersona = String.valueOf(tbl.getValueAt(row, 0).toString());
+            int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                PersonaBD.delete(pkPersona);
+                JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
+                cargarTabla();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

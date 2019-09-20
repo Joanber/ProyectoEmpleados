@@ -39,7 +39,24 @@ public class PersonaBD {
 
     }
 
-    public static ArrayList<Persona> getPersonas() {
+    public static boolean update(Persona persona, String identificacion) {
+        String UPDATE = "UPDATE public.\"Persona\"\n"
+                + "	SET identificacion='" + persona.getIdentificacion() + "', nombres='" + persona.getNombres() + "', apellidos='" + persona.getApellidos() + "', "
+                + "edad=" + persona.getEdad() + ", correo='" + persona.getCorreo() + "', telefono='" + persona.getTelefono() + "', direccion='" + persona.getDireccion() + "'\n"
+                + "	WHERE identificacion='" + identificacion + "';";
+
+        return Conexion.PrepareStatement(UPDATE) == null;
+    }
+
+    public static boolean delete(String identificacion) {
+        String DELETE = "DELETE FROM public.\"Persona\"\n"
+                + "	WHERE identificacion='" + identificacion + "'";
+
+        return Conexion.PrepareStatement(DELETE) == null;
+
+    }
+
+    public static ArrayList<Persona> getPersonas(String filtro) {
 
         String SELECT = ""
                 + "SELECT\n"
@@ -51,8 +68,8 @@ public class PersonaBD {
                 + "     \"Persona\".telefono,\n"
                 + "     \"Persona\".direccion \n"
                 + "FROM\n"
-                + "     \"Persona\" \n";
-
+                + "     \"Persona\"  WHERE apellidos ILIKE '%" + filtro + "%'\n";
+        System.out.println(SELECT);
         ArrayList<Persona> lista = new ArrayList<>();
 
         ResultSet rs = Conexion.Query(SELECT);
