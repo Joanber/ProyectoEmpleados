@@ -32,25 +32,14 @@ public class FormPersona extends javax.swing.JInternalFrame {
     private Persona getPersona() {
 
         Persona persona = new Persona();
-        if (pkPersona == null) {
-            persona.setIdentificacion(txtIdentificacion.getText());
-            persona.setNombres(txtNombres.getText());
-            persona.setApellidos(txtApellidos.getText());
-            persona.setEdad(Integer.valueOf(txtEdad.getText()));
-            persona.setCorreo(txtEmail.getText());
-            persona.setTelefono(txtTelefono.getText());
-            persona.setDireccion(txtDireccion.getText());
 
-        } else {
-
-            persona.setIdentificacion(txtIdentificacion.getText());
-            persona.setNombres(txtNombres.getText());
-            persona.setApellidos(txtApellidos.getText());
-            persona.setEdad(Integer.valueOf(txtEdad.getText()));
-            persona.setCorreo(txtEmail.getText());
-            persona.setTelefono(txtTelefono.getText());
-            persona.setDireccion(txtDireccion.getText());
-        }
+        persona.setIdentificacion(txtIdentificacion.getText());
+        persona.setNombres(txtNombres.getText());
+        persona.setApellidos(txtApellidos.getText());
+        persona.setEdad(Integer.valueOf(txtEdad.getText()));
+        persona.setCorreo(txtEmail.getText());
+        persona.setTelefono(txtTelefono.getText());
+        persona.setDireccion(txtDireccion.getText());
 
         return persona;
     }
@@ -220,7 +209,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
                 System.out.println("MODIFICAR");
             }
             this.dispose();
-            VtnPersonas vtn=new VtnPersonas(desktop);
+            VtnPersonas vtn = new VtnPersonas(desktop);
             this.desktop.desk.add(vtn);
             vtn.show();
         }

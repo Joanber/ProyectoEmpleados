@@ -22,7 +22,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
     private ArrayList<Persona> personas;
     private final VtnPrincipal desktop;
 
-    private String pkPersona=null;
+    private String pkPersona = null;
 
     public VtnPersonas(VtnPrincipal desktop) {
         this.desktop = desktop;
@@ -39,10 +39,10 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
 
     private void cargarTabla() {
         personas = PersonaBD.getPersonas(txtBuscar.getText());
-        for (int j = tbl.getModel().getRowCount() - 1; j >= 0; j--) {
-            table.removeRow(j);
-        }
+        table.setRowCount(0);
+
         for (Persona persona : personas) {
+
             table.addRow(new Object[]{
                 persona.getIdentificacion(),
                 persona.getNombres(),
@@ -69,6 +69,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnVerHistorial = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -126,12 +127,19 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
             }
         });
 
+        btnVerHistorial.setText("Ver Historial de Trabajo");
+        btnVerHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerHistorialActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -140,11 +148,15 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
                             .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(1, 1, 1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnVerHistorial)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -165,8 +177,10 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
-                .addGap(34, 34, 34))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnVerHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -205,7 +219,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-         int row = tbl.getSelectedRow();
+        int row = tbl.getSelectedRow();
         if (row != -1) {
             pkPersona = String.valueOf(tbl.getValueAt(row, 0).toString());
             int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
@@ -220,11 +234,27 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnVerHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerHistorialActionPerformed
+        // TODO add your handling code here:
+        int row = tbl.getSelectedRow();
+        if (row != -1) {
+            pkPersona = String.valueOf(tbl.getValueAt(row, 0).toString());
+            VtnHistorialPersona vtn = new VtnHistorialPersona(pkPersona, desktop);
+            this.desktop.desk.add(vtn);
+            vtn.show();
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVerHistorialActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnVerHistorial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

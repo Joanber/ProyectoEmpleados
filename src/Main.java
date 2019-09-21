@@ -9,8 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelos.Conexion;
-import modelos.bd.PersonaBD;
-import modelos.bd.UsuarioBD;
 import vista.login.Login;
 
 /**

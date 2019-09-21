@@ -78,4 +78,8 @@ public class Persona {
         this.direccion = direccion;
     }
 
+    public String informacion() {
+        return this.identificacion + " " + this.nombres + " " + this.apellidos;
+    }
+
 }
