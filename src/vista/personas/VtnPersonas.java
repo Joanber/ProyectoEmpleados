@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import modelos.bd.PersonaBD;
 import modelos.md.Persona;
 import vista.VtnPrincipal;
+import vista.ingresos.VtnIngresos;
 
 /**
  *
@@ -71,6 +72,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         btnVerHistorial = new javax.swing.JButton();
         btnVerPermisos = new javax.swing.JButton();
+        btnVerIngresos = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -142,6 +144,13 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
             }
         });
 
+        btnVerIngresos.setText("Ver Historial de Ingresos");
+        btnVerIngresos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerIngresosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,6 +176,8 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
                                 .addComponent(btnVerHistorial)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnVerPermisos)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVerIngresos)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -187,11 +198,12 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVerHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVerPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -276,12 +288,28 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnVerPermisosActionPerformed
 
+    private void btnVerIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerIngresosActionPerformed
+        // TODO add your handling code here:
+        int row = tbl.getSelectedRow();
+        if (row != -1) {
+            pkPersona = String.valueOf(tbl.getValueAt(row, 0).toString());
+            VtnIngresos vtn = new VtnIngresos(pkPersona, desktop);
+            this.desktop.desk.add(vtn);
+            vtn.show();
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVerIngresosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVerHistorial;
+    private javax.swing.JButton btnVerIngresos;
     private javax.swing.JButton btnVerPermisos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

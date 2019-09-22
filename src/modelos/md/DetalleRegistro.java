@@ -5,6 +5,8 @@
  */
 package modelos.md;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -53,4 +55,12 @@ public class DetalleRegistro {
         this.persona = persona;
     }
 
+    public String getFechaHoraString() {
+
+        LocalDateTime fechaHora = this.fechaHora.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        return "" + fechaHora.getYear() + "/" + fechaHora.getMonth() + "/" + fechaHora.getDayOfMonth() + " | " + fechaHora.getHour() + ":" + fechaHora.getMinute();
+    }
 }
