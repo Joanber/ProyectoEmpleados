@@ -214,7 +214,7 @@ private  int pkHorario=0;
             pkHorario=Integer.parseInt(tbHoraios.getValueAt(row, 0).toString());
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            CargoBD.delete(pkHorario);
+            HorarioBD.delete(pkHorario);
             JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
             cargarTabla();
         }
@@ -225,9 +225,7 @@ private  int pkHorario=0;
 
     private void txtBuscarHoraiosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarHoraiosKeyReleased
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
              cargarTabla();
-         }
     }//GEN-LAST:event_txtBuscarHoraiosKeyReleased
 
 

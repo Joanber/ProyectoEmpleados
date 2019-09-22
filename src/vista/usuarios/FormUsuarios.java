@@ -29,53 +29,44 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
         this.desktop = desktop;
         initComponents();
         this.setTitle("Registro de usuarios");
-        cargarUsuarioBD(pkUsuario);
         cargarComboPersonas();
+        cargarUsuarioBD();
     }
-    
-    private Usuario getUsuario(){
-        Usuario usuario=new Usuario();
-        if (pkUsuario==null) {
-            usuario.setUsername(txtUsername.getText());
-            usuario.setPassword(txtPassword.getText());
-            String identificacion=cmbPersonas.getSelectedItem().toString();
-            String[] cortarSoloIdentificacionComboBox=identificacion.split("-");
-            String identificacionCortada=cortarSoloIdentificacionComboBox[0];
-            usuario.getPersona().setIdentificacion(identificacionCortada);
-        } else {
-            
-            usuario.setUsername(txtUsername.getText());
-            usuario.setPassword(txtPassword.getText());
-            String identificacion=cmbPersonas.getSelectedItem().toString();
-            String[] cortarSoloIdentificacionComboBox=identificacion.split("-");
-            String identificacionCortada=cortarSoloIdentificacionComboBox[0];
-            usuario.getPersona().setIdentificacion(identificacionCortada);
-            
-        }
+
+    private Usuario getUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setUsername(txtUsername.getText());
+        usuario.setPassword(txtPassword.getText());
+        String identificacion = cmbPersonas.getSelectedItem().toString();
+        String[] cortarSoloIdentificacionComboBox = identificacion.split("-");
+        String identificacionCortada = cortarSoloIdentificacionComboBox[0];
+        usuario.getPersona().setIdentificacion(identificacionCortada);
+
         return usuario;
     }
-    private void cargarComboPersonas(){
+
+    private void cargarComboPersonas() {
         cmbPersonas.removeAllItems();
-        personas=PersonaBD.getPersonas("");
-        if(personas==null){
+        personas = PersonaBD.getPersonas("");
+        if (personas == null) {
             System.out.println("NO HAY PERSONAS");
-        }else{
-            personas.forEach((per)->{
-                cmbPersonas.addItem(per.getIdentificacion()+"-"+per.getNombres()+" "+per.getApellidos());
+        } else {
+            personas.forEach((per) -> {
+                cmbPersonas.addItem(per.getIdentificacion() + "-" + per.getNombres() + " " + per.getApellidos());
             });
         }
     }
-    private void cargarUsuarioBD(String pkUsuario){
-        if(pkUsuario!=null){
-            usuarioID=UsuarioBD.getUsuarioPor(pkUsuario);
+
+    private void cargarUsuarioBD() {
+        if (pkUsuario != null) {
+            usuarioID = UsuarioBD.getUsuarioPor(pkUsuario);
             txtUsername.setText(usuarioID.getUsername());
             txtPassword.setText(usuarioID.getPassword());
-            cmbPersonas.setSelectedItem(usuarioID.getPersona().getIdentificacion()+"-"+usuarioID.getPersona().getNombres()+" "+usuarioID.getPersona().getApellidos());
+            cmbPersonas.setSelectedItem(usuarioID.getPersona().getIdentificacion() + "-" + usuarioID.getPersona().getNombres() + " " + usuarioID.getPersona().getApellidos());
             cmbPersonas.setEnabled(false);
         }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,7 +91,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Usuarios");
+        jLabel1.setText("REGISTRO DE USUARIOS");
 
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,25 +149,23 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                                .addComponent(txtUsername))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnCancelar)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnGuardar))
-                                .addComponent(cmbPersonas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(chkboxPassword))
-                        .addGap(69, 69, 69))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                        .addComponent(txtUsername))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(btnCancelar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar))
+                        .addComponent(cmbPersonas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chkboxPassword))
+                .addGap(69, 69, 69))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +223,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
                 System.out.println("INSERTAR USUARIO");
             } else {
-                UsuarioBD.update(getUsuario(),pkUsuario);
+                UsuarioBD.update(getUsuario(), pkUsuario);
                 JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
                 System.out.println("MODIFICAR USUARIO");
             }
@@ -251,11 +240,11 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
 
     private void chkboxPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkboxPasswordActionPerformed
         // TODO add your handling code here:
-        if(chkboxPassword.isSelected()){
-            txtPassword.setEchoChar((char)0);
-        }else{
+        if (chkboxPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
             txtPassword.setEchoChar('*');
-            
+
         }
     }//GEN-LAST:event_chkboxPasswordActionPerformed
 

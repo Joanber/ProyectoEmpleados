@@ -6,6 +6,7 @@
 package vista.personas;
 
 import javax.swing.JOptionPane;
+import modelos.Validaciones;
 import modelos.bd.PersonaBD;
 import modelos.md.Persona;
 import vista.VtnPrincipal;
@@ -17,7 +18,7 @@ import vista.VtnPrincipal;
 public class FormPersona extends javax.swing.JInternalFrame {
 
     private final VtnPrincipal desktop;
-    private Persona persona;
+    private Persona personaID;
 
     private String pkPersona = null;
 
@@ -26,7 +27,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
         this.desktop = desktop;
         this.setTitle("Personas");
         initComponents();
-        cargarPersonaBD(pkPersona);
+        cargarPersonaBD();
     }
 
     private Persona getPersona() {
@@ -44,16 +45,16 @@ public class FormPersona extends javax.swing.JInternalFrame {
         return persona;
     }
 
-    private void cargarPersonaBD(String pkPersona) {
+    private void cargarPersonaBD() {
         if (pkPersona != null) {
-            persona = PersonaBD.getPersonaPor(pkPersona);
-            txtIdentificacion.setText(persona.getIdentificacion());
-            txtNombres.setText(persona.getNombres());
-            txtApellidos.setText(persona.getApellidos());
-            txtEdad.setText(String.valueOf(persona.getEdad()));
-            txtEmail.setText(persona.getCorreo());
-            txtTelefono.setText(persona.getTelefono());
-            txtDireccion.setText(persona.getDireccion());
+            personaID = PersonaBD.getPersonaPor(pkPersona);
+            txtIdentificacion.setText(personaID.getIdentificacion());
+            txtNombres.setText(personaID.getNombres());
+            txtApellidos.setText(personaID.getApellidos());
+            txtEdad.setText(String.valueOf(personaID.getEdad()));
+            txtEmail.setText(personaID.getCorreo());
+            txtTelefono.setText(personaID.getTelefono());
+            txtDireccion.setText(personaID.getDireccion());
         }
     }
 
@@ -83,7 +84,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Personas");
+        jLabel1.setText("REGISTRO DE PERSONAS");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel2.setText("Cedula:");
@@ -106,7 +107,18 @@ public class FormPersona extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel8.setText("Email:");
 
+        txtEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEdadKeyTyped(evt);
+            }
+        });
+
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -195,26 +207,48 @@ public class FormPersona extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+       
         if (txtIdentificacion.getText().equals("") || txtNombres.getText().equals("") || txtApellidos.getText().equals("")
                 || txtEdad.getText().equals("") || txtEmail.getText().equals("") || txtTelefono.getText().equals("") || txtDireccion.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (pkPersona == null) {
-                PersonaBD.insertar(getPersona());
-                JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
-                System.out.println("INSERTAR");
+            if (Validaciones.validadorDeCedula(txtIdentificacion.getText()) == false || Validaciones.validaCorreo(txtEmail.getText()) == false) {
+                JOptionPane.showMessageDialog(this, "Cedula Incorrecta y/o Email Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
-                PersonaBD.update(getPersona(), pkPersona);
-                JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
-                System.out.println("MODIFICAR");
+
+                if (pkPersona == null) {
+                    PersonaBD.insertar(getPersona());
+                    JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+                    System.out.println("INSERTAR");
+                } else {
+                    PersonaBD.update(getPersona(), pkPersona);
+                    JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
+                    System.out.println("MODIFICAR");
+                }
+                this.dispose();
+                VtnPersonas vtn = new VtnPersonas(desktop);
+                this.desktop.desk.add(vtn);
+                vtn.show();
             }
-            this.dispose();
-            VtnPersonas vtn = new VtnPersonas(desktop);
-            this.desktop.desk.add(vtn);
-            vtn.show();
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        VtnPersonas vtn = new VtnPersonas(desktop);
+        this.desktop.desk.add(vtn);
+        vtn.show();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
+        // TODO add your handling code here:
+        char validar = evt.getKeyChar();
+        if (Character.isLetter(validar)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEdadKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

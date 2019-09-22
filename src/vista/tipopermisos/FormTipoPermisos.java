@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 import modelos.bd.TipoPermisoBD;
 import modelos.md.TipoPermiso;
 import vista.VtnPrincipal;
-import vista.cargos.VtnCargos;
 
 /**
  *
@@ -20,24 +19,19 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
         this.desktop = desktop;
         this.pktipoPermiso = pktipoPermiso;
         initComponents();
-        cargarTipoPermiso(pktipoPermiso);
+        cargarTipoPermiso();
     }
 
     private TipoPermiso getPermiso() {
         TipoPermiso tipoPermiso = new TipoPermiso();
-        if (pktipoPermiso == 0) {
-            tipoPermiso.setNombre(txtNombrePermiso.getText());
-        } else {
-            tipoPermiso.setId(pktipoPermiso);
-            tipoPermiso.setNombre(txtNombrePermiso.getText());
+        tipoPermiso.setNombre(txtNombrePermiso.getText());
 
-        }
         return tipoPermiso;
     }
 
-    private void cargarTipoPermiso(int pkTipoPermiso) {
-        if (pkTipoPermiso != 0) {
-            permiso = TipoPermisoBD.getTipoPermisoPor(pkTipoPermiso);
+    private void cargarTipoPermiso() {
+        if (pktipoPermiso != 0) {
+            permiso = TipoPermisoBD.getTipoPermisoPor(pktipoPermiso);
             txtNombrePermiso.setText(permiso.getNombre());
         }
     }
@@ -61,7 +55,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Permisos");
+        jLabel1.setText("REGISTRO DE PERMISOS");
 
         jLabel2.setText("Descripción:");
 
@@ -140,7 +134,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
                 System.out.println("INSERTAR PERMISO");
             } else {
-                TipoPermisoBD.update(getPermiso());
+                TipoPermisoBD.update(getPermiso(), pktipoPermiso);
                 JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
                 System.out.println("MODIFICAR PERMISO");
             }

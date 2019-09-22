@@ -231,9 +231,8 @@ public class VtnCargos extends javax.swing.JInternalFrame {
 
     private void txtBuscarCargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCargoKeyReleased
         // TODO add your handling code here:
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
              cargarTabla();
-         }
+         
     }//GEN-LAST:event_txtBuscarCargoKeyReleased
 
 

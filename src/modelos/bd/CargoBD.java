@@ -26,10 +26,10 @@ public class CargoBD extends Cargo {
         return Conexion.PrepareStatement(INSERT) == null;
     }
 
-    public static boolean update(Cargo cargo) {
+    public static boolean update(Cargo cargo,int pkCargo) {
         String UPDATE = "UPDATE public.\"Cargo\"\n"
                 + "	set nombre='" + cargo.getNombre() + "'\n"
-                + "	WHERE id=" + cargo.getId() + ";";
+                + "	WHERE id=" + pkCargo + ";";
         System.out.println("update--------------->>>>>>>>>>>" + UPDATE);
         return Conexion.PrepareStatement(UPDATE) == null;
     }

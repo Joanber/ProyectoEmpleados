@@ -36,12 +36,11 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         
         initComponents();
         initSpinners();
-        cargarHorarioBD(pkHorario);
+        cargarHorarioBD();
     }
     
     private Horario getHorario() {
         Horario horario = new Horario();
-        if (pkHorario == 0) {
             String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
             String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
             LocalTime inicio = LocalTime.parse(timeInicio);
@@ -49,19 +48,10 @@ public class FormHorarios extends javax.swing.JInternalFrame {
             horario.setInicio(inicio);
             horario.setFin(fin);
             horario.setJornada(cmbJornadas.getSelectedItem().toString());
-        } else {
-            horario.setId(pkHorario);
-            String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
-            String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
-            LocalTime inicio = LocalTime.parse(timeInicio);
-            LocalTime fin = LocalTime.parse(timeFin);
-            horario.setInicio(inicio);
-            horario.setFin(fin);
-            horario.setJornada(cmbJornadas.getSelectedItem().toString());
-        }
+       
         return horario;
     }
-    private void cargarHorarioBD(int pkHorario){
+    private void cargarHorarioBD(){
         if(pkHorario!=0){
             try {
                 horarioID=HorarioBD.getHorarioPor(pkHorario);
@@ -141,7 +131,7 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Horarios");
+        jLabel1.setText("REGISTRO DE HORARIOS");
 
         jLabel2.setText("Hora Inicio:");
 
@@ -158,8 +148,8 @@ public class FormHorarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2))
@@ -220,9 +210,8 @@ public class FormHorarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
             System.out.println("INSERTAR HORARIO");
         } else {
-            HorarioBD.update(getHorario());
+            HorarioBD.update(getHorario(),pkHorario);
             JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
-            System.out.println(pkHorario + "---------------->>>>>>>>>>IDDDDDDDD");
         }
         this.dispose();
         VtnHorarios vtn = new VtnHorarios(desktop);
