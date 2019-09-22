@@ -5,17 +5,17 @@
  */
 package modelos.md;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
  * @author MrRainx
  */
 public class HistorialTrabajo {
-    
+
     private int id;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFinalizo;
+    private Date fechaInicio;
+    private Date fechaFinalizo;
     private String estado;
     private Persona persona;
     private Cargo cargo;
@@ -32,19 +32,19 @@ public class HistorialTrabajo {
         this.id = id;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFinalizo() {
+    public Date getFechaFinalizo() {
         return fechaFinalizo;
     }
 
-    public void setFechaFinalizo(LocalDate fechaFinalizo) {
+    public void setFechaFinalizo(Date fechaFinalizo) {
         this.fechaFinalizo = fechaFinalizo;
     }
 
@@ -79,7 +79,5 @@ public class HistorialTrabajo {
     public void setHorario(Horario horario) {
         this.horario = horario;
     }
-    
-    
-    
+
 }

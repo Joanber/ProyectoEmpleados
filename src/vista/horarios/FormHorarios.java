@@ -64,7 +64,7 @@ public class FormHorarios extends javax.swing.JInternalFrame {
     private void cargarHorarioBD(int pkHorario){
         if(pkHorario!=0){
             try {
-                horarioID=HorarioBD.getHorariopor(pkHorario);
+                horarioID=HorarioBD.getHorarioPor(pkHorario);
                 cmbJornadas.setSelectedItem(horarioID.getJornada());
                 String fechaInicio=horarioID.getInicio().toString();
                 String fechaFin=horarioID.getFin().toString();

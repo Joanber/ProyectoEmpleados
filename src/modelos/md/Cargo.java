@@ -33,4 +33,8 @@ public class Cargo {
         this.nombre = nombre;
     }
 
+    public String informacion() {
+        return "ID: " + this.id + ", Nombre: " + this.nombre;
+    }
+
 }

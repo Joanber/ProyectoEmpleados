@@ -6,10 +6,15 @@
 package vista.personas;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelos.bd.CargoBD;
+import modelos.bd.HistorialTrabajoBD;
 import modelos.bd.HorarioBD;
 import modelos.md.Cargo;
+import modelos.md.HistorialTrabajo;
 import modelos.md.Horario;
+import modelos.md.Persona;
+import vista.VtnPrincipal;
 
 /**
  *
@@ -20,24 +25,80 @@ public class FormHistorial extends javax.swing.JInternalFrame {
     private ArrayList<Cargo> cargos = null;
     private ArrayList<Horario> horarios = null;
 
-    public FormHistorial() {
+    private int pkHistorial = 0;
+    private String pkPersona = null;
+    private VtnPrincipal desktop = null;
+
+    public FormHistorial(int pkHistorial, String pkPersona, VtnPrincipal desktop) {
         initComponents();
+
+        this.pkHistorial = pkHistorial;
+        this.pkPersona = pkPersona;
+        this.desktop = desktop;
 
         this.cargos = CargoBD.getCargos("");
         this.horarios = HorarioBD.getHorarios("");
         cargarComboBoxes();
+        cargarHistorialBD();
     }
 
     private void cargarComboBoxes() {
 
         for (Cargo cargo : cargos) {
-            this.cmbCargo.addItem(cargo.getNombre());
+            this.cmbCargo.addItem(cargo.informacion());
         }
 
         for (Horario horario : horarios) {
-            this.cmbHorario.addItem(horario.getJornada());
+            this.cmbHorario.addItem(horario.informacionCmb());
         }
 
+    }
+
+    private void cargarHistorialBD() {
+
+        if (this.pkHistorial != 0) {
+            HistorialTrabajo historial = HistorialTrabajoBD.getHistorialPor(this.pkHistorial);
+
+            this.dtInicio.setDate(historial.getFechaInicio());
+            this.dtFin.setDate(historial.getFechaFinalizo());
+            this.cmbEstado.setSelectedItem(historial.getEstado());
+            this.cmbCargo.setSelectedItem(historial.getCargo().getNombre());
+            this.cmbHorario.setSelectedItem(historial.getHorario().informacionCmb());
+        }
+
+    }
+
+    private HistorialTrabajo getHistorial() {
+
+        HistorialTrabajo historial = new HistorialTrabajo();
+
+        historial.setFechaInicio(this.dtInicio.getCalendar().getTime());
+
+        historial.setFechaFinalizo(this.dtFin.getCalendar().getTime());
+
+        historial.setEstado(this.cmbEstado.getSelectedItem().toString());
+
+        Persona persona = new Persona();
+        persona.setIdentificacion(this.pkPersona);
+        historial.setPersona(persona);
+
+        String cargoCmb = this.cmbCargo.getSelectedItem().toString();
+        for (Cargo cargo : cargos) {
+            if (cargo.informacion().equals(cargoCmb)) {
+                historial.setCargo(cargo);
+                break;
+            }
+        }
+
+        String horarioCmb = this.cmbHorario.getSelectedItem().toString();
+        for (Horario horario : horarios) {
+            if (horario.informacionCmb().equals(horarioCmb)) {
+                historial.setHorario(horario);
+                break;
+            }
+        }
+
+        return historial;
     }
 
     @SuppressWarnings("unchecked")
@@ -55,8 +116,8 @@ public class FormHistorial extends javax.swing.JInternalFrame {
         cmbEstado = new javax.swing.JComboBox<>();
         cmbCargo = new javax.swing.JComboBox<>();
         cmbHorario = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -81,9 +142,19 @@ public class FormHistorial extends javax.swing.JInternalFrame {
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trabajando", "Egresado" }));
 
-        jButton1.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Guardar");
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,28 +168,28 @@ public class FormHistorial extends javax.swing.JInternalFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(dtFin, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                            .addComponent(dtFin, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbEstado, 0, 250, Short.MAX_VALUE))
+                            .addComponent(cmbEstado, 0, 300, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbCargo, 0, 250, Short.MAX_VALUE))
+                            .addComponent(cmbCargo, 0, 300, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(cmbHorario, 0, 250, Short.MAX_VALUE))))
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbHorario, 0, 300, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -149,23 +220,58 @@ public class FormHistorial extends javax.swing.JInternalFrame {
                     .addComponent(cmbHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+
+        if (this.dtInicio.getCalendar() == null || this.dtFin.getCalendar() == null) {
+
+            JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            if (pkHistorial == 0) {
+                HistorialTrabajoBD.insertar(getHistorial());
+
+            } else {
+
+                HistorialTrabajoBD.editar(getHistorial(), pkHistorial);
+
+            }
+
+            VtnHistorialPersona vtn = new VtnHistorialPersona(this.pkPersona, this.desktop);
+            this.dispose();
+            this.desktop.desk.add(vtn);
+            vtn.show();
+        }
+
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here
+        VtnHistorialPersona vtn = new VtnHistorialPersona(this.pkPersona, this.desktop);
+        this.dispose();
+        this.desktop.desk.add(vtn);
+        vtn.show();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbCargo;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbHorario;
     private com.toedter.calendar.JDateChooser dtFin;
     private com.toedter.calendar.JDateChooser dtInicio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

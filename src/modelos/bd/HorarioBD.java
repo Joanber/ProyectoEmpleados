@@ -57,7 +57,7 @@ public class HorarioBD extends Horario {
         return Conexion.PrepareStatement(DELETE) == null;
     }
 
-    public static Horario getHorariopor(int id) {
+    public static Horario getHorarioPor(int id) {
         String SELECT = "SELECT id, hora_inicio, hora_fin, jornada\n"
                 + "	FROM public.\"Horario\" WHERE id=" + id + ";";
         Horario horario = null;

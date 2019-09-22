@@ -41,7 +41,7 @@ public class FormCargos extends javax.swing.JInternalFrame {
 
     private void cargarCargoBD(int pkCargo) {
         if (pkCargo != 0) {
-            cargoID = CargoBD.getCargopor(pkCargo);
+            cargoID = CargoBD.getCargoPor(pkCargo);
             txtNombreCargo.setText(cargoID.getNombre());
         }
     }

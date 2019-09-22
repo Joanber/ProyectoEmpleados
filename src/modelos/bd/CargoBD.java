@@ -72,7 +72,7 @@ public class CargoBD extends Cargo {
         return null;
     }
 
-    public static Cargo getCargopor(int id) {
+    public static Cargo getCargoPor(int id) {
         String SELECT = "SELECT id, nombre\n"
                 + "	FROM public.\"Cargo\" WHERE id=" + id + "";
         Cargo cargo = null;

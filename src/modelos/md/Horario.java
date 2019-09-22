@@ -53,4 +53,12 @@ public class Horario {
         this.jornada = jornada;
     }
 
+    public String informacionCmb() {
+        return "ID: " + this.id + ", H.Inicio: " + this.inicio + ", H.Fin: " + this.fin + ", Jornada: " + this.jornada;
+    }
+
+    public String informacionTbl() {
+        return " " + this.inicio + " - " + this.fin + ", " + this.jornada;
+    }
+
 }
