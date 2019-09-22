@@ -208,7 +208,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVerPermisos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Hisotiral de Permisos"/>
+        <Property name="text" type="java.lang.String" value="Ver Historial de Permisos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerPermisosActionPerformed"/>

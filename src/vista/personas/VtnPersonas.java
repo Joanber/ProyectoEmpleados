@@ -135,7 +135,7 @@ public class VtnPersonas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnVerPermisos.setText("Ver Hisotiral de Permisos");
+        btnVerPermisos.setText("Ver Historial de Permisos");
         btnVerPermisos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerPermisosActionPerformed(evt);

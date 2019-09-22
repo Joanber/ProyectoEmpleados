@@ -200,11 +200,11 @@ public class VtnPermisos extends javax.swing.JInternalFrame {
 
         int row = tbl.getSelectedRow();
         if (row != -1) {
-            int idHistorial = Integer.valueOf(tbl.getValueAt(row, 0).toString());
+            int idPermiso = Integer.valueOf(tbl.getValueAt(row, 0).toString());
             int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
 
             if (reply == JOptionPane.YES_OPTION) {
-                HistorialTrabajoBD.delete(idHistorial);
+                DetallePermisoBD.delete(idPermiso);
                 JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
                 cargarTabla();
             }

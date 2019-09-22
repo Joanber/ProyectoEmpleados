@@ -7,8 +7,11 @@ package vista.personas;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelos.bd.DetallePermisoBD;
+import modelos.bd.HistorialTrabajoBD;
 import modelos.bd.TipoPermisoBD;
 import modelos.md.DetallePermiso;
+import modelos.md.HistorialTrabajo;
 import modelos.md.Persona;
 import modelos.md.TipoPermiso;
 import vista.VtnPrincipal;
@@ -33,6 +36,7 @@ public class FormPermiso extends javax.swing.JInternalFrame {
         this.desktop = desktop;
 
         cargarCmb();
+        cargarPermisoBD();
     }
 
     private void cargarCmb() {
@@ -71,6 +75,19 @@ public class FormPermiso extends javax.swing.JInternalFrame {
         return detalle;
     }
 
+    private void cargarPermisoBD() {
+
+        if (this.pkPermiso != 0) {
+            DetallePermiso permiso = DetallePermisoBD.getPermisosPor(this.pkPermiso);
+
+            this.dtInicio.setDate(permiso.getFechaInicio());
+            this.dtFin.setDate(permiso.getFechaFin());
+            this.cmbTipo.setSelectedItem(permiso.getTipo().informacionCmb());
+            this.txtObservaciones.setText(permiso.getObservaciones());
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,6 +104,8 @@ public class FormPermiso extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
+
+        setClosable(true);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Tipo:");
@@ -209,14 +228,14 @@ public class FormPermiso extends javax.swing.JInternalFrame {
         } else {
 
             if (pkPermiso == 0) {
-                //HistorialTrabajoBD.insertar(getPermiso());
+                DetallePermisoBD.insertar(getPermiso());
 
             } else {
 
-                //HistorialTrabajoBD.editar(getPermiso(), pkPermiso);
+                DetallePermisoBD.editar(getPermiso(), pkPermiso);
             }
 
-            VtnHistorialPersona vtn = new VtnHistorialPersona(this.pkPersona, this.desktop);
+            VtnPermisos vtn = new VtnPermisos(this.pkPersona, this.desktop);
             this.dispose();
             this.desktop.desk.add(vtn);
             vtn.show();
