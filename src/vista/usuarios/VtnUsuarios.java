@@ -5,7 +5,6 @@
  */
 package vista.usuarios;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,40 +17,42 @@ import vista.VtnPrincipal;
  * @author Skull
  */
 public class VtnUsuarios extends javax.swing.JInternalFrame {
+
     private final VtnPrincipal desktop;
     private DefaultTableModel table;
     private ArrayList<Usuario> usuarios;
-    private String pkUsuario=null;
+    private String pkUsuario = null;
 
-    
     public VtnUsuarios(VtnPrincipal desktop) {
         this.desktop = desktop;
         initComponents();
         Init();
     }
 
-    private void Init(){
-         table = (DefaultTableModel) tbUsuarios.getModel();
+    private void Init() {
+        table = (DefaultTableModel) tbUsuarios.getModel();
 
         cargarTabla();
-        
+
     }
-    private void cargarTabla(){
-        usuarios=UsuarioBD.getUsuarios(txtBuscarUsuario.getText());
+
+    private void cargarTabla() {
+        usuarios = UsuarioBD.getUsuarios(txtBuscarUsuario.getText());
         table.setRowCount(0);
-        for(int j=tbUsuarios.getModel().getRowCount()-1;j>=0;j--){
-             table.removeRow(j);
-         }
-        
-        for(Usuario usuario:usuarios){
-            System.out.println(usuario.getUsername()+"  -"+usuario.getPersona().getNombres());
+        for (int j = tbUsuarios.getModel().getRowCount() - 1; j >= 0; j--) {
+            table.removeRow(j);
+        }
+
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario.getUsername() + "  -" + usuario.getPersona().getNombres());
             table.addRow(new Object[]{
                 usuario.getUsername(),
                 usuario.getPersona().getIdentificacion(),
-                usuario.getPersona().getNombres() +" "+usuario.getPersona().getApellidos()
+                usuario.getPersona().getNombres() + " " + usuario.getPersona().getApellidos()
             });
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -181,7 +182,7 @@ public class VtnUsuarios extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        FormUsuarios form =new FormUsuarios(null,desktop);
+        FormUsuarios form = new FormUsuarios(null, desktop);
         this.desktop.desk.add(form);
         form.show();
         this.dispose();
@@ -189,39 +190,39 @@ public class VtnUsuarios extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        int row =tbUsuarios.getSelectedRow();
-        if(row!=-1){
-            pkUsuario=tbUsuarios.getValueAt(row, 0).toString();
-            FormUsuarios form=new FormUsuarios(pkUsuario,desktop);
+        int row = tbUsuarios.getSelectedRow();
+        if (row != -1) {
+            pkUsuario = tbUsuarios.getValueAt(row, 0).toString();
+            FormUsuarios form = new FormUsuarios(pkUsuario, desktop);
             this.desktop.desk.add(form);
             form.show();
             this.dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
         // TODO add your handling code here:
-        int row =tbUsuarios.getSelectedRow();
-        if(row!=-1){
-            pkUsuario=tbUsuarios.getValueAt(row, 0).toString();
+        int row = tbUsuarios.getSelectedRow();
+        if (row != -1) {
+            pkUsuario = tbUsuarios.getValueAt(row, 0).toString();
             int reply = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 UsuarioBD.delete(pkUsuario);
                 JOptionPane.showMessageDialog(this, "Registro eliminado correctamente");
                 cargarTabla();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Seleccione una fila", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
     private void txtBuscarUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioKeyReleased
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cargarTabla();
-        }
+
+        cargarTabla();
+
     }//GEN-LAST:event_txtBuscarUsuarioKeyReleased
 
 

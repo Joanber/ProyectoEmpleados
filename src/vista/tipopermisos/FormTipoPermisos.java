@@ -55,7 +55,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Permisos");
+        jLabel1.setText("REGISTRO DE PERMISOS");
 
         jLabel2.setText("Descripción:");
 

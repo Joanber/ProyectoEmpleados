@@ -216,7 +216,7 @@ public class Login extends javax.swing.JFrame {
             vtn.setLocationRelativeTo(null);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "NO SE HA ENCONTRADO ESE USUARIO");
+             JOptionPane.showMessageDialog(this, "Usuario y/o Contraseña Incorrecta", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
     }

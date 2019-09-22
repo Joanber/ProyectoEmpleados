@@ -84,7 +84,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Personas");
+        jLabel1.setText("REGISTRO DE PERSONAS");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel2.setText("Cedula:");

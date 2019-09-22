@@ -61,7 +61,7 @@ public class FormCargos extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setText("Registro de Cargos");
+        jLabel1.setText("REGISTRO DE CARGOS");
 
         jLabel2.setText("Descripción:");
 

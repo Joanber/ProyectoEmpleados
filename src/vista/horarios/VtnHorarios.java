@@ -225,9 +225,7 @@ private  int pkHorario=0;
 
     private void txtBuscarHoraiosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarHoraiosKeyReleased
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
              cargarTabla();
-         }
     }//GEN-LAST:event_txtBuscarHoraiosKeyReleased
 
 
