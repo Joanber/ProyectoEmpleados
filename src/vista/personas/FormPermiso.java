@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista.personas;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelos.bd.DetallePermisoBD;
-import modelos.bd.HistorialTrabajoBD;
 import modelos.bd.TipoPermisoBD;
 import modelos.md.DetallePermiso;
-import modelos.md.HistorialTrabajo;
 import modelos.md.Persona;
 import modelos.md.TipoPermiso;
 import vista.VtnPrincipal;
@@ -212,7 +205,7 @@ public class FormPermiso extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here
-        VtnHistorialPersona vtn = new VtnHistorialPersona(this.pkPersona, this.desktop);
+        VtnPermisos vtn = new VtnPermisos(this.pkPersona, this.desktop);
         this.dispose();
         this.desktop.desk.add(vtn);
         vtn.show();

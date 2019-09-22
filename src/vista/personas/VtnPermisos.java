@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.bd.DetallePermisoBD;
-import modelos.bd.HistorialTrabajoBD;
 import modelos.bd.PersonaBD;
 import modelos.md.DetallePermiso;
 import modelos.md.Persona;

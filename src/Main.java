@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelos.Conexion;
-import vista.login.Login;
+import vista.ingresos.Registro;
 
 /**
  *
@@ -34,10 +34,10 @@ public class Main {
             //HACEMOS QUE EL SISTEMA SE CONECTE A LA BASE DE DATOS(registramos el driver de postgres)
             Conexion.generarConexion();
 
-            //Iniciamos el Component o ventana de Login
-            Login login = new Login();
-            login.setVisible(true);
-            login.setLocationRelativeTo(null);
+            //Iniciamos el Component o ventana Registro de Ingresos/Salidas
+            Registro vtn = new Registro();
+            vtn.setVisible(true);
+            vtn.setLocationRelativeTo(null);
 
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

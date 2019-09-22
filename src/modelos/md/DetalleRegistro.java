@@ -5,7 +5,7 @@
  */
 package modelos.md;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class DetalleRegistro {
 
     private int id;
-    private LocalDateTime fechaHora;
+    private Date fechaHora;
     private int tipo;
     private Persona persona;
 
@@ -29,11 +29,11 @@ public class DetalleRegistro {
         this.id = id;
     }
 
-    public LocalDateTime getFechaHora() {
+    public Date getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
+    public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
 
