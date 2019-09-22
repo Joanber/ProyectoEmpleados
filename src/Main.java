@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelos.Conexion;
+import modelos.bd.Queries;
 import vista.ingresos.Registro;
 
 /**
@@ -33,7 +34,11 @@ public class Main {
 
             //HACEMOS QUE EL SISTEMA SE CONECTE A LA BASE DE DATOS(registramos el driver de postgres)
             Conexion.generarConexion();
-
+            
+            
+            Queries.getRetrasosDe("0102030405");
+            
+            
             //Iniciamos el Component o ventana Registro de Ingresos/Salidas
             Registro vtn = new Registro();
             vtn.setVisible(true);
