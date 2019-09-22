@@ -5,7 +5,7 @@
  */
 package modelos.md;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -14,8 +14,8 @@ import java.time.LocalDate;
 public class DetallePermiso {
 
     private int id;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private String observaciones;
     private Persona persona;
     private TipoPermiso tipo;
@@ -31,19 +31,19 @@ public class DetallePermiso {
         this.id = id;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 

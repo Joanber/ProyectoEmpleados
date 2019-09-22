@@ -59,7 +59,7 @@ public class TipoPermisoBD extends TipoPermiso {
         return lista;
     }
 
-    public static TipoPermiso getTipoPermisopor(int id) {
+    public static TipoPermiso getTipoPermisoPor(int id) {
         String SELECT = "SELECT id, nombre\n"
                 + "	FROM public.\"TipoPermiso\" WHERE id=" + id + "";
         TipoPermiso tipoPermiso = null;

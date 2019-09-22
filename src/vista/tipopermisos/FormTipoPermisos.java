@@ -37,7 +37,7 @@ public class FormTipoPermisos extends javax.swing.JInternalFrame {
 
     private void cargarTipoPermiso(int pkTipoPermiso) {
         if (pkTipoPermiso != 0) {
-            permiso = TipoPermisoBD.getTipoPermisopor(pkTipoPermiso);
+            permiso = TipoPermisoBD.getTipoPermisoPor(pkTipoPermiso);
             txtNombrePermiso.setText(permiso.getNombre());
         }
     }

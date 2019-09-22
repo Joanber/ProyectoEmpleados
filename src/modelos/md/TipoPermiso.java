@@ -33,4 +33,8 @@ public class TipoPermiso {
         this.nombre = nombre;
     }
 
+    public String informacionCmb() {
+        return "ID: " + this.id + ", " + this.nombre;
+    }
+
 }
