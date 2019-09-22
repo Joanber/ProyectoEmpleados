@@ -43,10 +43,10 @@ public class HorarioBD extends Horario {
         return lista;
     }
 
-    public static boolean update(Horario horario) {
+    public static boolean update(Horario horario,int pkHorario) {
         String UPDATE = "UPDATE public.\"Horario\"\n"
                 + "	SET  hora_inicio='" + horario.getInicio() + "', hora_fin='" + horario.getFin() + "', jornada='" + horario.getJornada() + "'\n"
-                + "	WHERE id=" + horario.getId() + ";";
+                + "	WHERE id=" + pkHorario + ";";
         System.out.println(UPDATE);
         return Conexion.PrepareStatement(UPDATE) == null;
     }

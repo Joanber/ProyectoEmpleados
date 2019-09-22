@@ -30,9 +30,19 @@ public class UsuarioBD extends Usuario {
                 + "	\"Usuario\" \n"
                 + "WHERE\n"
                 + "	\"Usuario\".username = '" + username + "';";
+        System.out.println(SELECT);
+        Usuario usuario = null;
+        ResultSet rs = Conexion.Query(SELECT);
 
-        return generarUsuario(SELECT);
+        try {
+            while (rs.next()) {
+                usuario = generarUsuario(rs);
+            }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
     }
 
     public static Usuario login(String username, String password) {
@@ -47,9 +57,18 @@ public class UsuarioBD extends Usuario {
                 + "WHERE\n"
                 + "	\"Usuario\".username = '" + username + "' \n"
                 + "	AND \"Usuario\".\"password\" = '" + password + "';";
+        Usuario usuario = null;
+        ResultSet rs = Conexion.Query(SELECT);
 
-        return generarUsuario(SELECT);
+        try {
+            while (rs.next()) {
+                usuario = generarUsuario(rs);
+            }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
     }
 
     public static boolean insertar(Usuario usuario) {
@@ -78,14 +97,14 @@ public class UsuarioBD extends Usuario {
     public static ArrayList<Usuario> getUsuarios(String username) {
         String SELECT = "SELECT username, password, persona_id\n"
                 + "	FROM public.\"Usuario\" WHERE username ILIKE '%" + username + "%'";
-        System.out.println(SELECT+"--------------------->>>>>>>>>>SELECT");
-        ArrayList<Usuario> lista = new ArrayList<>();
+        System.out.println(SELECT + "--------------------->>>>>>>>>>SELECT");
         ResultSet rs = Conexion.Query(SELECT);
+        ArrayList<Usuario> lista = new ArrayList<>();
 
         try {
             while (rs.next()) {
-                Usuario usuario = generarUsuario(SELECT);
-                lista.add(usuario);
+                lista.add(generarUsuario(rs));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,17 +112,13 @@ public class UsuarioBD extends Usuario {
         return lista;
     }
 
-    private static Usuario generarUsuario(String SELECT) {
-        Usuario usuario = null;
+    private static Usuario generarUsuario(ResultSet rs) {
+        Usuario usuario = new Usuario();
 
-        ResultSet rs = Conexion.Query(SELECT);
         try {
-            while (rs.next()) {
-                usuario = new Usuario();
-                usuario.setUsername(rs.getString(1));
-                usuario.setPassword(rs.getString(2));
-                usuario.setPersona(PersonaBD.getPersonaPor(rs.getString(3)));
-            }
+            usuario.setUsername(rs.getString(1));
+            usuario.setPassword(rs.getString(2));
+            usuario.setPersona(PersonaBD.getPersonaPor(rs.getString(3)));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);
         }

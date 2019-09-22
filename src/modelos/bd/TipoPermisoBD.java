@@ -26,10 +26,10 @@ public class TipoPermisoBD extends TipoPermiso {
         return Conexion.PrepareStatement(INSERT) == null;
     }
 
-    public static boolean update(TipoPermiso tipoPermiso) {
+    public static boolean update(TipoPermiso tipoPermiso,int pkTipoPermsiso) {
         String UPDATE = "UPDATE public.\"TipoPermiso\"\n"
                 + "	SET  nombre='" + tipoPermiso.getNombre() + "'\n"
-                + "	WHERE id=" + tipoPermiso.getId() + ";";
+                + "	WHERE id=" + pkTipoPermsiso + ";";
 
         System.out.println(UPDATE);
         return Conexion.PrepareStatement(UPDATE) == null;

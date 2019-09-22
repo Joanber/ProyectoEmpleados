@@ -38,6 +38,7 @@ public class VtnUsuarios extends javax.swing.JInternalFrame {
     }
     private void cargarTabla(){
         usuarios=UsuarioBD.getUsuarios(txtBuscarUsuario.getText());
+        table.setRowCount(0);
         for(int j=tbUsuarios.getModel().getRowCount()-1;j>=0;j--){
              table.removeRow(j);
          }

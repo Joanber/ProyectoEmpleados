@@ -29,53 +29,44 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
         this.desktop = desktop;
         initComponents();
         this.setTitle("Registro de usuarios");
-        cargarUsuarioBD(pkUsuario);
         cargarComboPersonas();
+        cargarUsuarioBD();
     }
-    
-    private Usuario getUsuario(){
-        Usuario usuario=new Usuario();
-        if (pkUsuario==null) {
-            usuario.setUsername(txtUsername.getText());
-            usuario.setPassword(txtPassword.getText());
-            String identificacion=cmbPersonas.getSelectedItem().toString();
-            String[] cortarSoloIdentificacionComboBox=identificacion.split("-");
-            String identificacionCortada=cortarSoloIdentificacionComboBox[0];
-            usuario.getPersona().setIdentificacion(identificacionCortada);
-        } else {
-            
-            usuario.setUsername(txtUsername.getText());
-            usuario.setPassword(txtPassword.getText());
-            String identificacion=cmbPersonas.getSelectedItem().toString();
-            String[] cortarSoloIdentificacionComboBox=identificacion.split("-");
-            String identificacionCortada=cortarSoloIdentificacionComboBox[0];
-            usuario.getPersona().setIdentificacion(identificacionCortada);
-            
-        }
+
+    private Usuario getUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setUsername(txtUsername.getText());
+        usuario.setPassword(txtPassword.getText());
+        String identificacion = cmbPersonas.getSelectedItem().toString();
+        String[] cortarSoloIdentificacionComboBox = identificacion.split("-");
+        String identificacionCortada = cortarSoloIdentificacionComboBox[0];
+        usuario.getPersona().setIdentificacion(identificacionCortada);
+
         return usuario;
     }
-    private void cargarComboPersonas(){
+
+    private void cargarComboPersonas() {
         cmbPersonas.removeAllItems();
-        personas=PersonaBD.getPersonas("");
-        if(personas==null){
+        personas = PersonaBD.getPersonas("");
+        if (personas == null) {
             System.out.println("NO HAY PERSONAS");
-        }else{
-            personas.forEach((per)->{
-                cmbPersonas.addItem(per.getIdentificacion()+"-"+per.getNombres()+" "+per.getApellidos());
+        } else {
+            personas.forEach((per) -> {
+                cmbPersonas.addItem(per.getIdentificacion() + "-" + per.getNombres() + " " + per.getApellidos());
             });
         }
     }
-    private void cargarUsuarioBD(String pkUsuario){
-        if(pkUsuario!=null){
-            usuarioID=UsuarioBD.getUsuarioPor(pkUsuario);
+
+    private void cargarUsuarioBD() {
+        if (pkUsuario != null) {
+            usuarioID = UsuarioBD.getUsuarioPor(pkUsuario);
             txtUsername.setText(usuarioID.getUsername());
             txtPassword.setText(usuarioID.getPassword());
-            cmbPersonas.setSelectedItem(usuarioID.getPersona().getIdentificacion()+"-"+usuarioID.getPersona().getNombres()+" "+usuarioID.getPersona().getApellidos());
+            cmbPersonas.setSelectedItem(usuarioID.getPersona().getIdentificacion() + "-" + usuarioID.getPersona().getNombres() + " " + usuarioID.getPersona().getApellidos());
             cmbPersonas.setEnabled(false);
         }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,7 +225,7 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
                 System.out.println("INSERTAR USUARIO");
             } else {
-                UsuarioBD.update(getUsuario(),pkUsuario);
+                UsuarioBD.update(getUsuario(), pkUsuario);
                 JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
                 System.out.println("MODIFICAR USUARIO");
             }
@@ -251,11 +242,11 @@ public class FormUsuarios extends javax.swing.JInternalFrame {
 
     private void chkboxPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkboxPasswordActionPerformed
         // TODO add your handling code here:
-        if(chkboxPassword.isSelected()){
-            txtPassword.setEchoChar((char)0);
-        }else{
+        if (chkboxPassword.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
             txtPassword.setEchoChar('*');
-            
+
         }
     }//GEN-LAST:event_chkboxPasswordActionPerformed
 

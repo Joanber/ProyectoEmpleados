@@ -36,12 +36,11 @@ public class FormHorarios extends javax.swing.JInternalFrame {
         
         initComponents();
         initSpinners();
-        cargarHorarioBD(pkHorario);
+        cargarHorarioBD();
     }
     
     private Horario getHorario() {
         Horario horario = new Horario();
-        if (pkHorario == 0) {
             String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
             String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
             LocalTime inicio = LocalTime.parse(timeInicio);
@@ -49,19 +48,10 @@ public class FormHorarios extends javax.swing.JInternalFrame {
             horario.setInicio(inicio);
             horario.setFin(fin);
             horario.setJornada(cmbJornadas.getSelectedItem().toString());
-        } else {
-            horario.setId(pkHorario);
-            String timeInicio = new SimpleDateFormat("HH:mm:ss").format(spnInicio.getValue());
-            String timeFin = new SimpleDateFormat("HH:mm:ss").format(spnFin.getValue());
-            LocalTime inicio = LocalTime.parse(timeInicio);
-            LocalTime fin = LocalTime.parse(timeFin);
-            horario.setInicio(inicio);
-            horario.setFin(fin);
-            horario.setJornada(cmbJornadas.getSelectedItem().toString());
-        }
+       
         return horario;
     }
-    private void cargarHorarioBD(int pkHorario){
+    private void cargarHorarioBD(){
         if(pkHorario!=0){
             try {
                 horarioID=HorarioBD.getHorarioPor(pkHorario);
@@ -220,9 +210,8 @@ public class FormHorarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
             System.out.println("INSERTAR HORARIO");
         } else {
-            HorarioBD.update(getHorario());
+            HorarioBD.update(getHorario(),pkHorario);
             JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
-            System.out.println(pkHorario + "---------------->>>>>>>>>>IDDDDDDDD");
         }
         this.dispose();
         VtnHorarios vtn = new VtnHorarios(desktop);

@@ -25,21 +25,17 @@ public class FormCargos extends javax.swing.JInternalFrame {
         this.desktop = desktop;
 
         initComponents();
-        cargarCargoBD(pkCargo);
+        cargarCargoBD();
     }
 
     private Cargo getCargo() {
         Cargo cargo = new Cargo();
-        if (pkCargo == 0) {
-            cargo.setNombre(txtNombreCargo.getText());
-        } else {
-            cargo.setId(pkCargo);
-            cargo.setNombre(txtNombreCargo.getText());
-        }
+        cargo.setNombre(txtNombreCargo.getText());
+
         return cargo;
     }
 
-    private void cargarCargoBD(int pkCargo) {
+    private void cargarCargoBD() {
         if (pkCargo != 0) {
             cargoID = CargoBD.getCargoPor(pkCargo);
             txtNombreCargo.setText(cargoID.getNombre());
@@ -153,7 +149,7 @@ public class FormCargos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
                 System.out.println("INSERTAR CARGO");
             } else {
-                CargoBD.update(getCargo());
+                CargoBD.update(getCargo(),pkCargo);
                 JOptionPane.showMessageDialog(this, "Se modificó correctamente!");
                 System.out.println("MODIFICAR CARGO");
             }
