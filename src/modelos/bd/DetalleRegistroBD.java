@@ -1,7 +1,9 @@
 package modelos.bd;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,10 +20,11 @@ public class DetalleRegistroBD {
 
         String INSERT = ""
                 + "INSERT INTO \"DetalleRegistros\"\n"
-                + "	( fecha_hora, tipo, persona_id )\n"
+                + "	( fecha, hora, tipo, persona_id )\n"
                 + "VALUES\n"
                 + "( \n"
-                + "	'" + detalle.getFechaHora() + "',\n"
+                + "	'" + Date.valueOf(detalle.getFecha()) + "',\n"
+                + "	'" + Time.valueOf(detalle.getHora()) + "',\n"
                 + "	'" + detalle.getTipo() + "',\n"
                 + "	'" + detalle.getPersona().getIdentificacion() + "'\n"
                 + ");";
@@ -35,7 +38,8 @@ public class DetalleRegistroBD {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"DetalleRegistros\".id,\n"
-                + "	\"DetalleRegistros\".fecha_hora,\n"
+                + "	\"DetalleRegistros\".fecha,\n"
+                + "	\"DetalleRegistros\".hora,\n"
                 + "	\"DetalleRegistros\".tipo \n"
                 + "FROM\n"
                 + "	\"DetalleRegistros\" \n"
@@ -51,8 +55,9 @@ public class DetalleRegistroBD {
                 DetalleRegistro detalle = new DetalleRegistro();
 
                 detalle.setId(rs.getInt(1));
-                detalle.setFechaHora(rs.getTimestamp(2));
-                detalle.setTipo(rs.getString(3));
+                detalle.setFecha(rs.getDate(2).toLocalDate());
+                detalle.setHora(rs.getTime(3).toLocalTime());
+                detalle.setTipo(rs.getString(4));
 
                 registros.add(detalle);
 
@@ -70,7 +75,8 @@ public class DetalleRegistroBD {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"DetalleRegistros\".id,\n"
-                + "	\"DetalleRegistros\".fecha_hora,\n"
+                + "	\"DetalleRegistros\".fecha,\n"
+                + "	\"DetalleRegistros\".hora,\n"
                 + "	\"DetalleRegistros\".tipo \n"
                 + "FROM\n"
                 + "	\"DetalleRegistros\" \n"
@@ -86,8 +92,9 @@ public class DetalleRegistroBD {
                 detalle = new DetalleRegistro();
 
                 detalle.setId(rs.getInt(1));
-                detalle.setFechaHora(rs.getTimestamp(2));
-                detalle.setTipo(rs.getString(3));
+                detalle.setFecha(rs.getDate(2).toLocalDate());
+                detalle.setHora(rs.getTime(3).toLocalTime());
+                detalle.setTipo(rs.getString(4));
 
             }
         } catch (SQLException ex) {
@@ -103,7 +110,8 @@ public class DetalleRegistroBD {
         String UPDATE = ""
                 + "UPDATE \"DetalleRegistros\" \n"
                 + "SET \n"
-                + "	fecha_hora = '" + detalle.getFechaHora() + "',\n"
+                + "	fecha = '" + Date.valueOf(detalle.getFecha()) + "',\n"
+                + "	hora = '" + Time.valueOf(detalle.getHora()) + "',\n"
                 + "	tipo = '" + detalle.getTipo() + "' \n"
                 + "WHERE\n"
                 + "	id = " + pk;

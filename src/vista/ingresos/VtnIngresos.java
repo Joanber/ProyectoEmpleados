@@ -49,7 +49,8 @@ public class VtnIngresos extends javax.swing.JInternalFrame {
         for (DetalleRegistro registro : registros) {
             this.table.addRow(new Object[]{
                 registro.getId(),
-                registro.getFechaHoraString(),
+                registro.getFecha(),
+                registro.getHora(),
                 registro.getTipo()
             });
 
@@ -102,11 +103,11 @@ public class VtnIngresos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Fecha/Hora", "Tipo"
+                "ID", "Fecha", "Hora", "Tipo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -120,8 +121,7 @@ public class VtnIngresos extends javax.swing.JInternalFrame {
             tbl.getColumnModel().getColumn(0).setPreferredWidth(50);
             tbl.getColumnModel().getColumn(0).setMaxWidth(50);
             tbl.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tbl.getColumnModel().getColumn(2).setResizable(false);
-            tbl.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(3).setPreferredWidth(80);
         }
 
         lblPersona.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N

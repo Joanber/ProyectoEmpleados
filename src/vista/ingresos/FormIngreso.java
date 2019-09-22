@@ -1,9 +1,9 @@
 package vista.ingresos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import modelos.bd.DetalleRegistroBD;
 import modelos.md.DetalleRegistro;
@@ -39,14 +39,13 @@ public class FormIngreso extends javax.swing.JInternalFrame {
                 Integer.valueOf(this.spMinutos.getValue().toString())
         );
 
-        LocalDateTime fechaHora = LocalDateTime.of(
-                this.dtFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                hora
-        );
+        detalle.setHora(hora);
 
-        detalle.setFechaHora(
-                Date.from(fechaHora.atZone(ZoneId.systemDefault()).toInstant())
-        );
+        LocalDate fecha = this.dtFecha.getDate().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        detalle.setFecha(fecha);
 
         Persona persona = new Persona();
         persona.setIdentificacion(this.pkPersona);
@@ -54,6 +53,7 @@ public class FormIngreso extends javax.swing.JInternalFrame {
 
         String tipoCmb = this.cmbTipo.getSelectedItem().toString();
         detalle.setTipo(tipoCmb);
+
         return detalle;
     }
 
@@ -63,12 +63,10 @@ public class FormIngreso extends javax.swing.JInternalFrame {
 
             DetalleRegistro registro = DetalleRegistroBD.getRegistrosPor(this.pkIngreso);
 
-            this.dtFecha.setDate(registro.getFechaHora());
+            this.dtFecha.setDate(java.sql.Date.valueOf(registro.getFecha()));
 
-            LocalDateTime hora = LocalDateTime.ofInstant(registro.getFechaHora().toInstant(), ZoneId.systemDefault());
-
-            this.spHora.setValue(hora.getHour());
-            this.spMinutos.setValue(hora.getMinute());
+            this.spHora.setValue(registro.getHora().getHour());
+            this.spMinutos.setValue(registro.getHora().getMinute());
 
             this.cmbTipo.setSelectedItem(registro.getTipo());
         }
