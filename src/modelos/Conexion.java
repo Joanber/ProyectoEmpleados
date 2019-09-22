@@ -22,7 +22,7 @@ public class Conexion {
 
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-   private static final String JDBC_URL = "jdbc:postgresql://35.192.7.211:5432/MVC";
+    private static final String JDBC_URL = "jdbc:postgresql://35.192.7.211:5432/MVC";
 //    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/MVC";
 
     private static final String JDBC_USER = "postgres";

@@ -17,7 +17,7 @@ public class DetalleRegistroBD {
                 + "VALUES\n"
                 + "( \n"
                 + "	'" + detalle.getFechaHora() + "',\n"
-                + "	" + detalle.getTipo() + ",\n"
+                + "	'" + detalle.getTipo() + "',\n"
                 + "	'" + detalle.getPersona().getIdentificacion() + "'\n"
                 + ");";
 

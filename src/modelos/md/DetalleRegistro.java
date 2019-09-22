@@ -15,7 +15,7 @@ public class DetalleRegistro {
 
     private int id;
     private Date fechaHora;
-    private int tipo;
+    private String tipo;
     private Persona persona;
 
     public DetalleRegistro() {
@@ -37,11 +37,11 @@ public class DetalleRegistro {
         this.fechaHora = fechaHora;
     }
 
-    public int getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 

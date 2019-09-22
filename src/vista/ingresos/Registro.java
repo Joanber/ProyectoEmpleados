@@ -3,6 +3,7 @@ package vista.ingresos;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import modelos.bd.DetalleRegistroBD;
 import modelos.bd.PersonaBD;
 import modelos.md.DetalleRegistro;
@@ -227,9 +228,16 @@ public class Registro extends javax.swing.JFrame {
             DetalleRegistro detalle = new DetalleRegistro();
 
             detalle.setPersona(this.persona);
-            detalle.setTipo(this.cmbTipo.getSelectedIndex());
+            detalle.setTipo(this.cmbTipo.getSelectedItem().toString());
             detalle.setFechaHora(this.horaActual);
             DetalleRegistroBD.insertar(detalle);
+
+            limpiarFormulario();
+            this.puedeGuardar = false;
+
+            JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
