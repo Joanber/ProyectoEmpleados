@@ -159,9 +159,10 @@ public class FormCargos extends javax.swing.JInternalFrame {
             vtn.show();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+    //EVENTO DE KEYTYPED AL MOMENTO DE DIGITAR CARACTERES EN EL TXT_NOMBRE_CARGO
     private void txtNombreCargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCargoKeyTyped
         // TODO add your handling code here:
+       //TODO ESTE CODIGO SE EJECUTA CUANDO SE DIGITE LETRAS AUTOMATICAMENTE SE CONVIERTE EN MAYUSCULAS EL TEXTO INTRODUCIDO
         char c = evt.getKeyChar();
         if (Character.isLowerCase(c)) {
             String cad = ("" + c).toUpperCase();

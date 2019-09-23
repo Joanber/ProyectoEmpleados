@@ -212,6 +212,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
                 || txtEdad.getText().equals("") || txtEmail.getText().equals("") || txtTelefono.getText().equals("") || txtDireccion.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
         } else {
+            //IF QUE VALIDA SI LA CEDULA ES UNA CEDULA ECUATORIANA Y TAMBN QUE UN CORREO SEA VALIDO SINO LO SON MOSTRARA EL SIGUINTE MENSAJE
             if (Validaciones.validadorDeCedula(txtIdentificacion.getText()) == false || Validaciones.validaCorreo(txtEmail.getText()) == false) {
                 JOptionPane.showMessageDialog(this, "Cedula Incorrecta y/o Email Incorrecto", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -241,7 +242,7 @@ public class FormPersona extends javax.swing.JInternalFrame {
         this.desktop.desk.add(vtn);
         vtn.show();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+   //EVENTO DE KEYTYPED DE DEL TXT_EDAD VALIDA QUE SOLO SE INGRESE NUMEROS 
     private void txtEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdadKeyTyped
         // TODO add your handling code here:
         char validar = evt.getKeyChar();

@@ -10,15 +10,16 @@ package modelos.md;
  * @author MrRainx
  */
 public class Usuario {
-
+    //ATRIBUTOS DE CLASE
     private String username;
     private String password;
     private Persona persona;
-
+     
+    //CONSTRUCTOR VACIO
     public Usuario() {
         this.persona=new Persona();
     }
-
+    //METODOS GETTER Y SETTER
     public String getUsername() {
         return username;
     }
@@ -42,7 +43,8 @@ public class Usuario {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-
+    
+    //METODO TOSTRING
     @Override
     public String toString() {
         return "Usuario{" + "username=" + username + ", password=" + password + ", persona=" + persona + '}';
