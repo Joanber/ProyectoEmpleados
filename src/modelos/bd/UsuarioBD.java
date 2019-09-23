@@ -19,7 +19,8 @@ import modelos.md.Usuario;
  */
 //CLASE QUE EXTIENDE DE USUARIO CON TODOS SUS ATRIBUTOS Y REALIZA LOS PROCESOS CON LA BASE DE DATOS
 public class UsuarioBD extends Usuario {
-   //METODO ESTATICO DE USUARIO QUE OBTIENE UN USUARIO CON EL PARAMETRO DE USERNAME
+    //METODO ESTATICO DE USUARIO QUE OBTIENE UN USUARIO CON EL PARAMETRO DE USERNAME
+
     public static Usuario getUsuarioPor(String username) {
         //SELECT SQL 
         String SELECT = ""
@@ -75,7 +76,8 @@ public class UsuarioBD extends Usuario {
         }
         return usuario;
     }
-   // METODO ESTATICO QUE INSERTA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USUARIO
+    // METODO ESTATICO QUE INSERTA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USUARIO
+
     public static boolean insertar(Usuario usuario) {
         //INSTRUCCION DE INSERT SQL
         String INSERT = "INSERT INTO public.\"Usuario\"(\n"
@@ -85,7 +87,7 @@ public class UsuarioBD extends Usuario {
         return Conexion.PrepareStatement(INSERT) == null;
     }
 
-   // METODO ESTATICO QUE MODIFICA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USUARIO Y EL USERNAME
+    // METODO ESTATICO QUE MODIFICA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USUARIO Y EL USERNAME
     public static boolean update(Usuario usuario, String username) {
         //INSTRUCCION DE UPDATE SQL
         String UPDATE = "UPDATE public.\"Usuario\"\n"
@@ -95,7 +97,7 @@ public class UsuarioBD extends Usuario {
         return Conexion.PrepareStatement(UPDATE) == null;
     }
 
-   // METODO ESTATICO QUE ELIMINA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USERNAME
+    // METODO ESTATICO QUE ELIMINA UN REGISTRO EN LA BASE DATOS CON EL PARAMETRO DE USERNAME
     public static boolean delete(String username) {
         //INSTRUCCION DELETE SQL
         String DELETE = "DELETE FROM public.\"Usuario\"\n"
@@ -103,6 +105,7 @@ public class UsuarioBD extends Usuario {
         System.out.println(DELETE);
         return Conexion.PrepareStatement(DELETE) == null;
     }
+
     //METODO ESTATICO QUE DEVUELVE UNA LISTA DE USUARIOS DE LA BASE DE DATOS
     public static ArrayList<Usuario> getUsuarios(String username) {
         //INSTRUCCION SELECT SQL
@@ -125,6 +128,7 @@ public class UsuarioBD extends Usuario {
         //RETORNA UNA LISTA DE USUARIOS
         return lista;
     }
+
     //METODO ESTATICO QUE GENERA UN USUARIO POR UNA CONSULTA RESULTSET 
     private static Usuario generarUsuario(ResultSet rs) {
         // INSTANCIA DE USUARIO
@@ -134,6 +138,7 @@ public class UsuarioBD extends Usuario {
             //SETEAMOS EN CADA UNO DE LOS ATRIBUTOS  DEL OBJETO USUARIO LOS DATOS CORRESPONDIENTES DESDE LA BASE DE DATOS
             usuario.setUsername(rs.getString(1));
             usuario.setPassword(rs.getString(2));
+            //USAMOS UN METODO DE LA CLASE "PersonaBD" PARA BUSCAR LA PERSONA Y SETEARLA EN EL USUARIO
             usuario.setPersona(PersonaBD.getPersonaPor(rs.getString(3)));
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, ex);

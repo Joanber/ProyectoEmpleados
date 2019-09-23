@@ -20,25 +20,51 @@ import java.util.logging.Logger;
  */
 public class Conexion {
 
+    /*
+        ESTE ATRIBUTO INDICA QUE DRIVER DE BASE DE DATOS USAR EN ESTE CASO "POSTGRESQL"
+     */
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
 
+    /*
+        AQUI DEFINIMOS LA DIRECCION, PUERTO Y NOMBRE DE NUESTRA BASE DE DATOS
+     */
     private static final String JDBC_URL = "jdbc:postgresql://35.192.7.211:5432/MVC";
 //    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/MVC";
-
+    /*
+        AQUI DEFINIMOS EL USUARIO DE NUESTRA BASE DE DATOS
+     */
     private static final String JDBC_USER = "postgres";
 
+    /*
+        AQUI DEFINIMOS EL PASSWORD DE NUESTRA BASE DE DATOS
+     */
     private static final String JDBC_PASSWORD = "3113";
 //    private static final String JDBC_PASSWORD = "CuencaE77";
 
+    /*
+        AQUI GUARDAREMOS EL DRIVER CONEXION DE POSTGRESQL
+     */
     private static Driver driver = null;
 
+    /*
+        ESTA VARIABLE ALMACENARA LA CONEXION A LA BASE DE DATOS
+     */
     private static Connection conn = null;
 
+    /**
+     * ESTE METODO GENERA LA CONEXION CON LA BASE DE DATOS, USA LA VARIABLES
+     * DEFINIDAS ANTERIORMENTE PARA CONECTARCE CON LA BASE DE DATOS
+     *
+     * @throws SQLException --> EN CASO DE UN ERROR LANZA UNA EXCEPCION
+     */
     public static synchronized void generarConexion() throws SQLException {
 
         if (driver == null) {
             try {
 
+                /*
+                    AQUI REGISTRAMOS EL DRIVER PARA QUE USE POSTGRESQL
+                 */
                 Class jdbcDriverClass = Class.forName(JDBC_DRIVER);
 
                 driver = (Driver) jdbcDriverClass.newInstance();
@@ -51,9 +77,12 @@ public class Conexion {
                 Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, e);
 
             }
-            System.out.println("TE HAZ CONECTADO HA" + JDBC_URL);
+            System.out.println("TE HAZ CONECTADO HA: " + JDBC_URL);
         }
 
+        /*
+            SI EL DRIVER SE REGISTRA CORRECTAMENTE GENERAMOS LA CONEXION CON LA BASE DE DATOS
+         */
         conn = DriverManager.getConnection(
                 JDBC_URL,
                 JDBC_USER,
@@ -62,10 +91,20 @@ public class Conexion {
 
     }
 
+    /*
+        ESTE METODO SOLO ES UN GETTER DE LA VARIABLE "conn"
+     */
     public static Connection getConnection() {
         return conn;
     }
 
+    /**
+     * ESTE METODO SIRVE PARA EJECUTAR: INSERTS, UPDATES, Y DELETES
+     *
+     * @param Statement(String): RECIBE LA SENTENCIA SQL PARA EJECUTARLA
+     * @return SI TODO SE EJECUTA CORRECTAMENTE RETORNA NULL Y SI NO RETORNA UNA
+     * EXCEPCION DE TIPO "SQLException"
+     */
     public static SQLException PrepareStatement(String Statement) {
 
         try {
@@ -84,6 +123,13 @@ public class Conexion {
 
     }
 
+    /**
+     * ESTE METODO SRIVE PARA EJECUTAR: SELECTS
+     *
+     * @param Query(String): RECIBE LA SENTENCIA SQL PARA EJECUTARLA
+     * @return SI TODO SE EJECUTA CORRECTAMENTE DEVUELVE UN OBJETO DE TIPO
+     * "ResultSet" EN CASO DE QUE NO RETORNA "null"
+     */
     public static ResultSet Query(String Query) {
 
         try {

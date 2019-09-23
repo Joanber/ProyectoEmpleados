@@ -13,6 +13,9 @@ import java.util.Date;
  */
 public class HistorialTrabajo {
 
+    /*
+        DEFINIMOS LOS TRAIBUTOS DE LA CLASE
+     */
     private int id;
     private Date fechaInicio;
     private Date fechaFinalizo;
@@ -21,9 +24,15 @@ public class HistorialTrabajo {
     private Cargo cargo;
     private Horario horario;
 
+    /*
+        CREAMOS EL CONSTRUCTOR DE LA CLASE
+     */
     public HistorialTrabajo() {
     }
 
+    /*
+        CREAMOS LOS GETTERS Y SETTERS PARA PODER ACCEDER A LOS ATRIBUTOS DE LA CLASE
+     */
     public int getId() {
         return id;
     }

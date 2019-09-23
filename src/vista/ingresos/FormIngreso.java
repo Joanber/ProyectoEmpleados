@@ -61,7 +61,7 @@ public class FormIngreso extends javax.swing.JInternalFrame {
 
         if (this.pkIngreso != 0) {
 
-            DetalleRegistro registro = DetalleRegistroBD.getRegistrosPor(this.pkIngreso);
+            DetalleRegistro registro = DetalleRegistroBD.getRegistroPor(this.pkIngreso);
 
             this.dtFecha.setDate(java.sql.Date.valueOf(registro.getFecha()));
 

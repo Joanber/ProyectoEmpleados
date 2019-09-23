@@ -70,7 +70,7 @@ public class DetalleRegistroBD {
 
     }
 
-    public static DetalleRegistro getRegistrosPor(int pk) {
+    public static DetalleRegistro getRegistroPor(int pk) {
 
         String SELECT = ""
                 + "SELECT\n"
