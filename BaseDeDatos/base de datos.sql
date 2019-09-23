@@ -18,7 +18,8 @@ CREATE TABLE "Usuario"(
 
 CREATE TABLE "DetalleRegistros"(
     id SERIAL NOT NULL PRIMARY KEY,
-    fecha_hora TIMESTAMP DEFAULT NOW(),
+    fecha DATE ,
+    hora TIME(6),
     tipo VARCHAR(20),
     persona_id VARCHAR(30)
 );
