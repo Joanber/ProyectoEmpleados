@@ -15,15 +15,22 @@ import vista.login.Login;
  */
 public class Registro extends javax.swing.JFrame {
 
+    //DEFINIMOS :
+    //UNA VARIABLE QUE ALMACENE LA INFORMACION DE LA PERSONA
     private Persona persona = null;
+    //UNA VARIABLE QUE ALMACENE LA FECHA ACTUAL
     private LocalDate fechaActual = null;
+    //UNA VARIABLE QUE ALAMACENE LA HORA ACTUAL
     private LocalTime horaActual = null;
+    //UNA BANDERA BOOLEANA PARA SABER SI SE PUEDE O NO GUARDAR EL REGISTRO EN LA BASE DE DATOS
     private boolean puedeGuardar = false;
 
+    //EL CONTRUCTOR DE LA CLASE
     public Registro() {
         initComponents();
     }
 
+    //ESTE METODO REINICIA EL FORMULARIO
     private void limpiarFormulario() {
         this.txtCedula.setText("");
         this.txtFechaActual.setText("");
@@ -190,6 +197,7 @@ public class Registro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //ESTE METODO INICIA LA VENTANA DE LOGIN
     private void btnIrAlPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrAlPanelActionPerformed
         // TODO add your handling code here:
         Login login = new Login();
@@ -197,63 +205,82 @@ public class Registro extends javax.swing.JFrame {
         login.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnIrAlPanelActionPerformed
 
+    //ESTE METODO BUSCA LA PERSONA EN LA BASE DE DATOS
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
 
+        //REALIZAMOS LA BUSQUEDA EN LA BASE  DE DATOS
         this.persona = PersonaBD.getPersonaPor(txtCedula.getText());
 
         if (this.persona == null) {
+            //SI NO ENCUENTRA NINGUN RESULTADO ENTONCES PONE UN MENAJE DE ERROR EN EL TEXT-AREA
             this.txtInformacion.setText(""
                     + "NO SE HA ENCONTRADO\n"
                     + "NINGUN RESULTADO CON\n"
                     + "LA CEDULA: " + this.txtCedula.getText()
             );
-
+            //PONEMOS LA BANDERA EN FALSE PARA QUE NO SE PUEDA GUARDAR EL REGISTRO
             this.puedeGuardar = false;
 
         } else {
-
+            //SI ENCUENTRA EL REGISTRO EN LA BASE DE LO ESCRIBE EN EL TEXT-AREA DE LA PARTE DERECHA DE LA PANTALLA
             this.txtInformacion.setText(""
                     + "Cedula: " + this.persona.getIdentificacion() + "\n"
                     + "Nombres: " + this.persona.getNombres() + "\n"
                     + "Apellidos: " + this.persona.getApellidos() + "\n"
             );
 
+            //SACAMOS LA FECHA Y HORA ACTUAL PARA LUEGO GUARDARLAS
             this.fechaActual = LocalDate.now();
             this.horaActual = LocalTime.now();
 
+            //SETTEAMOS ESA FECHA Y HORA EN LOS TEXT-FIELDS
             this.txtFechaActual.setText(this.fechaActual.toString());
             this.txtHoraActual.setText(this.horaActual.getHour() + ":" + this.horaActual.getMinute());
 
+            //PONEMOS LA BANDERA EN TRUE PARA QUE SE PUEDA GAURDAR EL REGISTRO
             this.puedeGuardar = true;
         }
 
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    //  ESTE METODO SIRVE PARA CANCELAR LAS ACCIONES
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        //LIMPIAMOS EL FORMULARIO Y CAMBIAMOS EL ETADO DE LA BANDERA A FALSE
+        //PARA QUE NO DEJE GUARDAR NADA
         this.limpiarFormulario();
         this.puedeGuardar = false;
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    //ESTE METODO MANDA A GUARDAR EN LA BASE DE DATOS EL REGISTRO DE INGRESO O SALIDA 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+
+        //SI LA BANDERA ESTA EN TRUE ENTONCES REALIZAMOS EL PROCESO DE GAURADO
         if (this.puedeGuardar) {
 
+            //CREAMOS UNA VARIABLE QUE ALMACENE LOS VALORES A GUARDAR
             DetalleRegistro detalle = new DetalleRegistro();
 
+            //RELLENAMOS LA VARIABLE
             detalle.setPersona(this.persona);
             detalle.setTipo(this.cmbTipo.getSelectedItem().toString());
             detalle.setFecha(this.fechaActual);
             detalle.setHora(this.horaActual);
+
+            //INSERTAMOS EL REGISTRO EN LA BASE DE DATOS
             DetalleRegistroBD.insertar(detalle);
 
+            //LIMPIAMOS EL FORMULARIO
             limpiarFormulario();
+            //CAMBIAMOS EL ESTADO A QUE YA NO SE PUEDA GUARDAR
             this.puedeGuardar = false;
 
+            //ENVIAMOS UN MENSAJE AL USUARIO INDICANDO QUE SE HA GUARDADO CORRECAMENTE
             JOptionPane.showMessageDialog(this, "Se guardó correctamente!");
         } else {
+            //EN CASO DE QUE HAYAN CAMPOS VACIOS .. ENVIAMOS UN MENSAJE ALERTANDO AL USUARIO
             JOptionPane.showMessageDialog(this, "Campos Vacios", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
