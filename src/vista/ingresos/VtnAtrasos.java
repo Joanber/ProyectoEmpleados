@@ -17,17 +17,26 @@ import modelos.md.Persona;
  */
 public class VtnAtrasos extends javax.swing.JInternalFrame {
 
+    /**
+     * ESTE ES EL CONSTRUCTOR DE LA VISTA
+     *
+     * @param pkPersona RECIBIMOS LA pkPersona(cedula)
+     */
     public VtnAtrasos(String pkPersona) {
         initComponents();
 
+        //BUSCAMOS LA PERSONA EN LA BASE DE DATOS
         Persona persona = PersonaBD.getPersonaPor(pkPersona);
-
+        //SETEAMOS LA INFORMACION DE LA PERSONA EN EL LABEL DE LA VENTANA
         this.lblPersona.setText("HISTORIAL DE ATRASOS DE: " + persona.informacion());
 
+        //DAMOS MODELO A LA TABLA PARA PODER AGREGAR FILAS
         DefaultTableModel table = (DefaultTableModel) this.tbl.getModel();
 
+        //EJECUTAMOS UN QUERIE PARA TRAER TODOS LOS ATRASOS DE LA PERSONA A PARTIR DE SU CEDULA
         ArrayList<Object[]> filas = Queries.getRetrasosDe(pkPersona);
 
+        //AGREGAMOS LA FILA A LA TABLA DE JAVA
         for (Object[] fila : filas) {
             table.addRow(fila);
         }

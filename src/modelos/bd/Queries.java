@@ -18,6 +18,14 @@ import modelos.Conexion;
  */
 public class Queries {
 
+    /**
+     * ESTE METODO BUSCA TODOS LOS ATRASOS QUE HAY TENIDO UNA PERSONA
+     *
+     * @param pkPersona(String): BUSCAMOS A PARTIR DE LA cedula
+     * @return RETORNAMOS UN ARRAYLIST DE TIPOD Object[] RETORNAMOS UN ARRAY
+     * DENTRO DE OTRO ARRAY EL SUB ARRAY ES UNA FILA DE LA BASE DE DATOS, Y ESE
+     * SUB ARRAY LO PONDREMOS EN LA TABLA DE JAVA
+     */
     public static ArrayList<Object[]> getRetrasosDe(String pkPersona) {
 
         String SELECT = ""
@@ -40,13 +48,15 @@ public class Queries {
                 + "ORDER BY\n"
                 + "	\"HistorialTrabajo\".fecha_inicio, \"Cargo\".nombre";
 
+        //EJECUTAMOS LA CONSULTA
         ResultSet rs = Conexion.Query(SELECT);
-
+        //CREAMOS NUESTRO ARRAY PARA QUE ALMACENE LOS RESULTADOS
         ArrayList<Object[]> registros = new ArrayList<>();
 
         try {
             while (rs.next()) {
 
+                //RELLENAMOS EL SUBARRAY
                 Object[] row = new Object[]{
                     rs.getString(1),
                     rs.getString(2),
@@ -55,7 +65,7 @@ public class Queries {
                     rs.getString(5),
                     rs.getString(6)
                 };
-
+                //AREGAMOS EL SUBARRAY AL ARRAY PRINCIPAL
                 registros.add(row);
             }
         } catch (SQLException ex) {
